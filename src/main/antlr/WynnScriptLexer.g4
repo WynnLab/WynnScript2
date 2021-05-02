@@ -1,0 +1,3 @@
+lexer grammar WynnScriptLexer;
+
+LETTER: .;
