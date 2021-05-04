@@ -1,7 +1,9 @@
 package com.wynnlab.wynnscript
 
-val methods = hashMapOf("plus" to Number::plus, "minus" to Number::minus, "times" to Number::times,
+val binaryNumberMethods = hashMapOf<String, Number.(Number) -> Any>("plus" to Number::plus, "minus" to Number::minus, "times" to Number::times,
     "div" to Number::div, "rem" to Number::rem, "compareTo" to Number::compareTo, "equals" to Number::equals)
+val unaryNumberMethods = hashMapOf<String, Number.() -> Number>("unaryPlus" to Number::unaryPlus, "unaryMinus" to Number::unaryMinus)
+val unaryBooleanMethods = hashMapOf<String, Boolean.() -> Boolean>("not" to { !this })
 
 // Generated code
 
@@ -51,4 +53,16 @@ fun Number.compareTo(other: Number): Number {
     if (this is Long) return compareTo(other.toLong())
     if (other is Long) return toLong().compareTo(other)
     return toInt().compareTo(other.toInt())
+}
+
+fun Number.unaryPlus(): Number {
+    if (this is Double) return unaryPlus()
+    if (this is Long) return unaryPlus()
+    return toInt().unaryPlus()
+}
+
+fun Number.unaryMinus(): Number {
+    if (this is Double) return unaryMinus()
+    if (this is Long) return unaryMinus()
+    return toInt().unaryMinus()
 }

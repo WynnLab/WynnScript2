@@ -1,5 +1,6 @@
 package com.wynnlab.wynnscript
 
+import com.wynnlab.wynnscript.ast.isTrue
 import java.lang.reflect.Method
 
 fun Any.getMethod(name: String, vararg parameters: Class<*>?): Method {
@@ -33,9 +34,12 @@ fun Any.getMethod(name: String, vararg parameters: Class<*>?): Method {
     return res ?: throw NoSuchMethodException("${c.canonicalName}.$name(${parameters.map { it?.canonicalName }.joinToString()})")
 }
 
-fun Any.invokeMethod(name: String, vararg args: Any?): Any? = when (this) {
-    is Int, is Long, is Double -> methods[name]?.invoke(this as Number, args[0] as Number)
-    else -> getMethod(name, *Array(args.size) { i -> args[i]?.javaClass }).invoke(this, *args)
+fun Any.invokeMethod(name: String, vararg args: Any?): Any? {
+    return when (this) {
+        is Int, is Long, is Double, is Boolean -> binaryNumberMethods[name]?.also { return it(this as Number, args[0] as Number) } ?:
+            unaryNumberMethods[name]?.also { return it(this as Number) } ?: unaryBooleanMethods[name]?.also { return it(this.isTrue()) }
+        else -> getMethod(name, *Array(args.size) { i -> args[i]?.javaClass }).invoke(this, *args)
+    }
 }
 
 fun Any.getField(name: String): Any? {

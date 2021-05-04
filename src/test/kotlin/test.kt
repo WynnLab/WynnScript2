@@ -8,8 +8,7 @@ fun main() {
         # Test
         
         function main() {
-            var String = java::lang::String;
-            println("X" is String);
+            println(-(1 + 7));
         }
     """.trimIndent())
 

@@ -35,7 +35,7 @@ var_declaration
     ;
 
 if_statement
-    : IF LPAREN expression RPAREN statements (ELSE IF LPAREN expression RPAREN statements)* ELSE statements
+    : IF LPAREN expression RPAREN statements (ELSE IF LPAREN expression RPAREN statements)* (ELSE statements)?
     ;
 
 while_statement
@@ -61,7 +61,6 @@ expression
 operator_expression
     : primary_expression #primary
     | field_get #getField
-    | field_set #setField
     | function_call #invoke
     | method_call #method
     | index_get #getIndex
@@ -77,6 +76,7 @@ operator_expression
     | operator_expression OR operator_expression #or
     | <assoc=right> operator_expression QUEST operator_expression COLON operator_expression #conditional
     | id assign_operator operator_expression #assign
+    | field_set #setField
     | ELLIPSIS operator_expression #spread
     ;
 

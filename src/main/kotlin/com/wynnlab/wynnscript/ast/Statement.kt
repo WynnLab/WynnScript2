@@ -50,7 +50,7 @@ internal class IfStatement(ctx: WynnScriptParser.If_statementContext) : Statemen
             }
         }
 
-        if (!met) {
+        if (!met && bodies.size > conditions.size) {
             bodies[bodies.size - 1](Scope(scope))
         }
     }
@@ -63,11 +63,23 @@ internal class WhileStatement(ctx: WynnScriptParser.While_statementContext) : St
 
     override fun invoke(scope: Scope) = if (bodyFirst) {
         do {
-            body(Scope(scope))
+            try {
+                body(Scope(scope))
+            } catch (_: Break) {
+                break
+            } catch (_: Continue) {
+                continue
+            }
         } while (condition(scope).isTrue())
     } else {
         while (condition(scope).isTrue())
-            body(Scope(scope))
+            try {
+                body(Scope(scope))
+            } catch (_: Break) {
+                break
+            } catch (_: Continue) {
+                continue
+            }
     }
 }
 
@@ -80,7 +92,13 @@ internal class ForStatement(ctx: WynnScriptParser.For_statementContext) : Statem
         val iterator = iterable(scope) as Iterable<*>
 
         for (variable in iterator)
-            body(Scope(scope).apply { store(varName, variable) })
+            try {
+                body(Scope(scope).apply { store(varName, variable) })
+            } catch (_: Break) {
+                break
+            } catch (_: Continue) {
+                continue
+            }
     }
 }
 

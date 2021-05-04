@@ -99,8 +99,8 @@ fragment EscapeSeq: '\\' ([nrt] | 'u' [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-
 
 NumberLiteral: DecimalLiteral | RealLiteral;
 
-fragment DecimalLiteral: '0' | [1-9] [0-9]*;
-fragment RealLiteral: ('0' | [1-9] [0-9]*) ([fF] | [fF]? Exponent) | ([1-9] [0-9]*)? '.' [0-9]+ [fF]? Exponent?;
+fragment DecimalLiteral: '0' | [+-]? [1-9] [0-9]*;
+fragment RealLiteral: [+-]? ('0' | [1-9] [0-9]*) ([fF] | [fF]? Exponent) | ([1-9] [0-9]*)? '.' [0-9]+ [fF]? Exponent?;
 fragment Exponent: [eE] [+-]? [1-9] [0-9]*;
 
 HexLiteral: '0' [xX] [0-9a-fA-F]+;
