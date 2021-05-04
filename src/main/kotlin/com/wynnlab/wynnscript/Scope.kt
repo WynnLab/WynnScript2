@@ -10,7 +10,9 @@ class Scope(private val parent: Scope? = null) {
     fun lookup(name: String): Any? = when {
         names.containsKey(name) -> names[name]
         parent != null -> parent.lookup(name)
-        else -> throw NameNotDefinedException(name)
+        else -> try {
+            Class.forName(name.replace("::", "."))
+        } catch (_: ClassNotFoundException) { throw NameNotDefinedException(name) }
     }
 
     fun remove(name: String) {

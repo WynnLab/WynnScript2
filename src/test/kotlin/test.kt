@@ -8,11 +8,8 @@ fun main() {
         # Test
         
         function main() {
-            var i = 0;
-            while(i < 10) {
-                println(i);
-                i += 1;
-            };
+            var String = java::lang::String;
+            println("X" is String);
         }
     """.trimIndent())
 

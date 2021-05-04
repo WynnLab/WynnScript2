@@ -9,12 +9,6 @@ internal interface Expression : Statement {
     companion object {
         operator fun invoke(ctx: WynnScriptParser.ExpressionContext) = when (ctx) {
             is WynnScriptParser.OperatorContext -> OperatorExpression(ctx.operator_expression())
-            is WynnScriptParser.GetFieldContext -> GetField(ctx.field_get())
-            is WynnScriptParser.SetFieldContext -> SetField(ctx.field_set())
-            is WynnScriptParser.InvokeContext -> FunctionCall(ctx.function_call())
-            is WynnScriptParser.MethodContext -> MethodCall(ctx.method_call())
-            is WynnScriptParser.GetIndexContext -> GetIndex(ctx.index_get())
-            is WynnScriptParser.SetIndexContext -> SetIndex(ctx.index_set())
             else -> throw WynnScriptParseException(ctx)
         }
     }

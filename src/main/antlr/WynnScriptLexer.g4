@@ -13,6 +13,7 @@ SEMI: ';';
 COLON: ':';
 COMMA: ',';
 DOT: '.';
+COLONCOLON: '::';
 
 ELLIPSIS: '...';
 

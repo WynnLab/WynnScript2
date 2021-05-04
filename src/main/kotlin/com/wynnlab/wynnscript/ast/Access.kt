@@ -9,7 +9,7 @@ internal class GetField(ctx: WynnScriptParser.Field_getContext) : Expression {
     } catch (e: NullPointerException) {
         Name(ctx.field_get().text!!)
     }
-    val name = ctx.id().text!!
+    val name = ctx.simple_id().text!!
 
     override fun invoke(scope: Scope): Any? = obj(scope)!!.getField(name)
 }

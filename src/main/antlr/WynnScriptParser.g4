@@ -13,7 +13,7 @@ function
     ;
 
 parameters
-    : id (COMMA id)*
+    : simple_id (COMMA simple_id)*
     ;
 
 statements
@@ -31,7 +31,7 @@ statement
     ;
 
 var_declaration
-    : VAR id EQ expression
+    : VAR simple_id EQ expression
     ;
 
 if_statement
@@ -44,7 +44,7 @@ while_statement
     ;
 
 for_statement
-    : FOR LPAREN id IN expression RPAREN statements
+    : FOR LPAREN simple_id IN expression RPAREN statements
     ;
 
 control_statement
@@ -56,16 +56,17 @@ control_statement
 
 expression
     : operator_expression #operator
+    ;
+
+operator_expression
+    : primary_expression #primary
     | field_get #getField
     | field_set #setField
     | function_call #invoke
     | method_call #method
     | index_get #getIndex
     | index_set #setIndex
-    ;
-
-operator_expression
-    : operator_expression (INC | DEC) #postfix
+    | operator_expression (INC | DEC) #postfix
     | (BANG | TILDE | PLUS | DASH | INC | DEC) operator_expression #prefix
     | operator_expression POW operator_expression #power
     | operator_expression (STAR | SLASH | PERCENT) operator_expression #product
@@ -77,7 +78,6 @@ operator_expression
     | <assoc=right> operator_expression QUEST operator_expression COLON operator_expression #conditional
     | id assign_operator operator_expression #assign
     | ELLIPSIS operator_expression #spread
-    | primary_expression #primary
     ;
 
 assign_operator
@@ -85,7 +85,7 @@ assign_operator
     ;
 
 field_get
-    : field_get DOT id
+    : field_get DOT simple_id
     | primary_expression
     ;
 
@@ -129,4 +129,6 @@ literal
     | NULL
     ;
 
-id: Identifier;
+simple_id: Identifier;
+
+id: simple_id (COLONCOLON simple_id)*;

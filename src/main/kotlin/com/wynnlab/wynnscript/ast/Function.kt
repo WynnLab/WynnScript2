@@ -6,7 +6,7 @@ import com.wynnlab.wynnscript.antlr.WynnScriptParser
 
 internal class Function(ctx: WynnScriptParser.FunctionContext) : Invocable {
     val name = ctx.id().text!!
-    val parameters = ctx.parameters()?.id()?.map { it.text!! } ?: emptyList()
+    val parameters = ctx.parameters()?.simple_id()?.map { it.text!! } ?: emptyList()
     val statements = Statement.list(ctx.statements())
 
     override operator fun invoke(scope: Scope, vararg args: Any?): Any? {

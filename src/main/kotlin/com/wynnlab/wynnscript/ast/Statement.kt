@@ -28,7 +28,7 @@ internal operator fun List<Statement>.invoke(scope: Scope) {
 }
 
 internal class VarDeclaration(ctx: WynnScriptParser.Var_declarationContext) : Statement {
-    private val name = ctx.id().text!!
+    private val name = ctx.simple_id().text!!
     private val value = Expression(ctx.expression())
 
     override fun invoke(scope: Scope) {
@@ -72,7 +72,7 @@ internal class WhileStatement(ctx: WynnScriptParser.While_statementContext) : St
 }
 
 internal class ForStatement(ctx: WynnScriptParser.For_statementContext) : Statement {
-    private val varName = ctx.id().text!!
+    private val varName = ctx.simple_id().text!!
     private val iterable = Expression(ctx.expression())
     private val body = Statement.list(ctx.statements())
 
