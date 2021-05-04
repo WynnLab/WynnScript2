@@ -46,10 +46,14 @@ internal class MethodCall(ctx: WynnScriptParser.Method_callContext) : Expression
 }
 
 internal class GetIndex(ctx: WynnScriptParser.Index_getContext) : Expression, WithArgs(ctx.args()) {
-    val field = GetField(ctx.field_get())
+    val obj = try {
+        GetField(ctx.field_get()).obj
+    } catch (e: NullPointerException) {
+        Name(ctx.field_get().text!!)
+    }
 
     override fun invoke(scope: Scope): Any? =
-        field.obj(scope)!!.invokeMethod("get", *Array(args.size) { i -> args[i](scope) })
+        obj(scope)!!.invokeMethod("get", *Array(args.size) { i -> args[i](scope) })
 }
 
 internal class SetIndex(ctx: WynnScriptParser.Index_setContext) : Expression {
@@ -58,7 +62,7 @@ internal class SetIndex(ctx: WynnScriptParser.Index_setContext) : Expression {
     private val operator = assignOperator(ctx.assign_operator())
 
     override fun invoke(scope: Scope): Any? {
-        val o = obj.field.obj(scope)!!
+        val o = obj.obj(scope)!!
         val args = Array(obj.args.size) { i -> obj.args[i](scope) }
         var v = value(scope)
         val prev = if (operator > 0) o.invokeMethod("get", *args) else null

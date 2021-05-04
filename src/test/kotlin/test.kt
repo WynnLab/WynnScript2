@@ -8,10 +8,12 @@ fun main() {
         # Test
         
         function main() {
-            var a = "Hi";
-            println(a.length());
-            a = null;
-            println(a.length());
+            var a = a.list;
+            println(a);
+            a.add("u");
+            println(a);
+            a[1] = 2;
+            println(a[1]);
         }
     """.trimIndent())
 
@@ -62,6 +64,8 @@ class A(var a: Int) {
     fun give(i: CharSequence) = a
 
     fun give(a: Int) = a
+
+    val list = mutableListOf("X")
 }
 
 /*@Test
