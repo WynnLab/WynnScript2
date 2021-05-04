@@ -8,12 +8,11 @@ fun main() {
         # Test
         
         function main() {
-            var a = a.list;
-            println(a);
-            a.add("u");
-            println(a);
-            a[1] = 2;
-            println(a[1]);
+            var i = 0;
+            while(i < 10) {
+                println(i);
+                i += 1;
+            };
         }
     """.trimIndent())
 

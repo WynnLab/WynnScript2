@@ -34,7 +34,7 @@ internal interface PrimaryExpression : Expression {
 }
 
 internal class Literal(ctx: WynnScriptParser.LiteralContext) : PrimaryExpression {
-    val value = ctx.StringLiteral()?.let { getString(it.text) } ?:
+    private val value = ctx.StringLiteral()?.let { getString(it.text) } ?:
         ctx.NumberLiteral()?.let { getNumber(it.text) } ?:
         ctx.HexLiteral()?.text?.substring(2)?.toLong(16) ?:
         ctx.BinLiteral()?.text?.substring(2)?.toInt(2) ?:

@@ -1,6 +1,5 @@
 package com.wynnlab.wynnscript.ast
 
-import com.wynnlab.wynnscript.Invocable
 import com.wynnlab.wynnscript.Scope
 import com.wynnlab.wynnscript.WynnScriptParseException
 import com.wynnlab.wynnscript.antlr.WynnScriptParser
@@ -16,6 +15,7 @@ internal interface Statement {
             is WynnScriptParser.ForContext -> ForStatement(ctx.for_statement())
             is WynnScriptParser.ControlContext -> ControlStatement(ctx.control_statement())
             is WynnScriptParser.ExContext -> Expression(ctx.expression())
+            is WynnScriptParser.EmptyContext -> PASS
             else -> throw WynnScriptParseException(ctx)
         }
     }
@@ -99,7 +99,11 @@ internal class ControlStatement(ctx: WynnScriptParser.Control_statementContext) 
     private fun valueOrUnit(scope: Scope) = if (value == null) Unit else value.invoke(scope)
 }
 
+internal object PASS : Statement {
+    override fun invoke(scope: Scope) {}
+}
+
 private object Break : Exception()
 private object Continue : Exception()
-private class Return(val value: Any?) : Exception()
+internal class Return(val value: Any?) : Exception()
 private class Yield(val value: Any?) : Exception()

@@ -85,6 +85,8 @@ TRUE: 'true';
 FALSE: 'false';
 NULL: 'null';
 
+THIS: 'this';
+
 // Literals
 
 StringLiteral

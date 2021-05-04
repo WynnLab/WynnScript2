@@ -103,10 +103,10 @@ internal class Comparison(ctx: WynnScriptParser.ComparisonContext) : BinaryOpera
         0, 1, 2, 3 -> {
             val comp = left(scope)!!.invokeMethod("compareTo", right(scope)) as Int
             when (operator) {
-                0 -> comp <= 0
-                1 -> comp >= 0
-                2 -> comp < 0
-                else -> comp > 0
+                0 -> comp < 0
+                1 -> comp > 0
+                2 -> comp <= 0
+                else -> comp >= 0
             }
         }
         4, 6 -> !(right(scope)!!.invokeMethod("contains", left(scope)) as Boolean xor (operator == 4))

@@ -27,6 +27,7 @@ statement
     | for_statement #for
     | control_statement SEMI #control
     | expression SEMI #ex
+    | SEMI #empty
     ;
 
 var_declaration
@@ -39,7 +40,7 @@ if_statement
 
 while_statement
     : WHILE LPAREN expression RPAREN statements
-    | DO statements WHILE LPAREN expression RPAREN
+    | DO statements WHILE LPAREN expression RPAREN SEMI
     ;
 
 for_statement

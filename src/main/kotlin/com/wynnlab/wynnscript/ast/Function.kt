@@ -9,13 +9,17 @@ internal class Function(ctx: WynnScriptParser.FunctionContext) : Invocable {
     val parameters = ctx.parameters()?.id()?.map { it.text!! } ?: emptyList()
     val statements = Statement.list(ctx.statements())
 
-    override operator fun invoke(scope: Scope, vararg args: Any?): Any {
+    override operator fun invoke(scope: Scope, vararg args: Any?): Any? {
         val locals = Scope(scope)
 
         parameters.forEachIndexed { i, n ->
             locals.store(n, args[i])
         }
 
-        return statements(locals)
+        return try {
+            statements(locals)
+        } catch (e: Return) {
+            e.value
+        }
     }
 }
