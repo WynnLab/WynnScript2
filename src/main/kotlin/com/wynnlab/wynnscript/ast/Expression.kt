@@ -22,6 +22,7 @@ internal interface PrimaryExpression : Expression {
             is WynnScriptParser.ParenContext -> Expression(ctx.expression())
             is WynnScriptParser.LitContext -> Literal(ctx.literal())
             is WynnScriptParser.NameContext -> Name(ctx.text!!)
+            is WynnScriptParser.ThisContext -> Data
             else -> throw WynnScriptParseException(ctx)
         }
     }
@@ -45,4 +46,12 @@ internal class Literal(ctx: WynnScriptParser.LiteralContext) : PrimaryExpression
 
 internal data class Name(val name: String) : PrimaryExpression {
     override fun invoke(scope: Scope): Any? = scope.lookup(name)
+}
+
+internal object Data : PrimaryExpression {
+    override fun invoke(scope: Scope) = object {
+        val dict = scope.lookup("this") as Map<*, *>
+
+        override fun toString(): String = "this(${dict.map { (k, v) -> "$k=$v" }.joinToString()})"
+    }
 }

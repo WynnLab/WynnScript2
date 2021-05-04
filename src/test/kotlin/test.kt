@@ -8,7 +8,9 @@ fun main() {
         # Test
         
         function main() {
-            println(-(1 + 7));
+            this.a = 0;
+            
+            println(this);
         }
     """.trimIndent())
 

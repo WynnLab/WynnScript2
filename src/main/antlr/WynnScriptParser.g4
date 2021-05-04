@@ -87,6 +87,7 @@ assign_operator
 field_get
     : field_get DOT simple_id
     | primary_expression
+    | THIS
     ;
 
 field_set
@@ -117,6 +118,7 @@ primary_expression
     : LPAREN expression RPAREN #paren
     | literal #lit
     | id #name
+    | THIS #this
     ;
 
 literal

@@ -13,6 +13,11 @@ class CompiledWynnScript(parseTree: WynnScriptParser.WynnScriptContext) {
         functions.forEach { (k, v) -> scope.store(k, v) }
     }
 
+    private val data: HashMap<String, out Any?> = hashMapOf()
+    init {
+        scope.store("this", data)
+    }
+
     operator fun invoke(name: String, vararg args: Any?): Any? {
         val function = functions[name] ?: throw NoSuchFunctionException(name, args.size)
 

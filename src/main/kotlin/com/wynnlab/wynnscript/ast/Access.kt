@@ -10,8 +10,9 @@ internal class GetField(ctx: WynnScriptParser.Field_getContext) : Expression {
         Name(ctx.field_get().text!!)
     }
     val name = ctx.simple_id().text!!
+    val thiz = obj is Name && obj.name == "this"
 
-    override fun invoke(scope: Scope): Any? = obj(scope)!!.getField(name)
+    override fun invoke(scope: Scope): Any? = if (thiz) (obj(scope) as Map<*, *>)[name] else obj(scope)!!.getField(name)
 }
 
 internal class SetField(ctx: WynnScriptParser.Field_setContext) : Expression {
@@ -19,9 +20,16 @@ internal class SetField(ctx: WynnScriptParser.Field_setContext) : Expression {
     private val value = Expression(ctx.expression())
     private val operator = assignOperator(ctx.assign_operator())
 
+    @Suppress("unchecked_cast")
     override fun invoke(scope: Scope): Any? {
-        val o = field.obj(scope)!!
         var v = value(scope)
+
+        if (field.thiz) {
+           (field.obj(scope) as MutableMap<String, Any?>)[field.name] = v
+            return v
+        }
+
+        val o = field.obj(scope)!!
         val prev = if (operator > 0) o.getField(field.name) else null
         v = applyAssignOperator(operator, prev, v)
         o.setField(field.name, v)
