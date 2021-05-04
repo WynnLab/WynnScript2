@@ -63,6 +63,8 @@ DEC: '--';
 FUNCTION: 'function';
 VAR: 'var';
 
+DEL: 'del';
+
 IF: 'if';
 ELSE: 'else';
 WHILE: 'while';

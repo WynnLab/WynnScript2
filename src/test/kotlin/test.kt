@@ -7,10 +7,12 @@ fun main() {
     val script = WynnScript("""
         # Test
         
+        function init(msg) {
+            this.msg = msg;
+        }
+        
         function main() {
-            this.a = 0;
-            
-            println(this);
+            println(this.msg);
         }
     """.trimIndent())
 
@@ -19,6 +21,7 @@ fun main() {
     ast["println"] = Invocable { _, args -> if (args.size != 1) throw IllegalArgumentException() else println(args[0]) }
     ast["a"] = A(0)
 
+    ast.invoke("init", "Hi")
     ast.invoke("main")
 /*    for (i in listOf("plus", "minus", "times", "div", "rem")) {
         println("""fun Number.$i(other: Number): Number {

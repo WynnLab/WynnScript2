@@ -10,6 +10,7 @@ internal interface Statement {
 
         operator fun invoke(ctx: WynnScriptParser.StatementContext): Statement = when (ctx) {
             is WynnScriptParser.VarContext -> VarDeclaration(ctx.var_declaration())
+            is WynnScriptParser.DelContext -> VarDeletion(ctx.var_deletion())
             is WynnScriptParser.IfContext -> IfStatement(ctx.if_statement())
             is WynnScriptParser.WhileContext -> WhileStatement(ctx.while_statement())
             is WynnScriptParser.ForContext -> ForStatement(ctx.for_statement())
@@ -33,6 +34,14 @@ internal class VarDeclaration(ctx: WynnScriptParser.Var_declarationContext) : St
 
     override fun invoke(scope: Scope) {
         scope.store(name, value(scope))
+    }
+}
+
+internal class VarDeletion(ctx: WynnScriptParser.Var_deletionContext) : Statement {
+    private val name = ctx.simple_id().text!!
+
+    override fun invoke(scope: Scope) {
+        scope.remove(name)
     }
 }
 

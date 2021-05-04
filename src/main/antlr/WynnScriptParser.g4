@@ -22,6 +22,7 @@ statements
 
 statement
     : var_declaration SEMI #var
+    | var_deletion SEMI #del
     | if_statement #if
     | while_statement #while
     | for_statement #for
@@ -32,6 +33,10 @@ statement
 
 var_declaration
     : VAR simple_id EQ expression
+    ;
+
+var_deletion
+    : DEL simple_id
     ;
 
 if_statement
