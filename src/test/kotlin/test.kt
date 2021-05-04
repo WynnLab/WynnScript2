@@ -1,17 +1,38 @@
-import com.wynnlab.wynnscript.WynnScript
-import com.wynnlab.wynnscript.antlr.WynnScriptLexer
-import com.wynnlab.wynnscript.antlr.WynnScriptParser
-import com.wynnlab.wynnscript.ast.Call
-import com.wynnlab.wynnscript.ast.Literal
-import com.wynnlab.wynnscript.ast.Name
-import org.antlr.v4.runtime.CharStreams
-import org.antlr.v4.runtime.CommonTokenStream
+import com.wynnlab.wynnscript.*
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.Assertions.*
+import java.lang.IllegalArgumentException
 
 @Test
 fun main() {
-    val int = "1"
+    val script = WynnScript("""
+        # Test
+        
+        function main() {
+            var a = "Hi";
+            println(a.length());
+            a = null;
+            println(a.length());
+        }
+    """.trimIndent())
+
+    val ast = script.compile()
+
+    ast["println"] = Invocable { _, args -> if (args.size != 1) throw IllegalArgumentException() else println(args[0]) }
+    ast["a"] = A(0)
+
+    ast.invoke("main")
+/*    for (i in listOf("plus", "minus", "times", "div", "rem")) {
+        println("""fun Number.$i(other: Number): Number {
+    if (this is Double) return $i(other.toDouble())
+    if (other is Double) return toDouble().$i(other)
+    if (this is Long) return $i(other.toLong())
+    if (other is Long) return toLong().$i(other)
+    return toInt().$i(other.toInt())
+}
+""")
+    }*/
+}
+/*    /*val int = "1"
     val float = "1f"
     val double = "1.0"
     val long = "1234567890123"
@@ -30,7 +51,17 @@ fun main() {
         val literal = Literal(parser.literal())
 
         println(literal.value?.let { "${it::class.simpleName}: $it" })
-    }
+    }*/
+
+    val a = A(5)
+
+    println(a.setField("a", 2))
+}*/
+
+class A(var a: Int) {
+    fun give(i: CharSequence) = a
+
+    fun give(a: Int) = a
 }
 
 /*@Test

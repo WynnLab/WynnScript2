@@ -31,14 +31,17 @@ public class WynnScriptParser extends Parser {
 		RULE_wynnScript = 0, RULE_header = 1, RULE_function = 2, RULE_parameters = 3, 
 		RULE_statements = 4, RULE_statement = 5, RULE_var_declaration = 6, RULE_if_statement = 7, 
 		RULE_while_statement = 8, RULE_for_statement = 9, RULE_control_statement = 10, 
-		RULE_expression = 11, RULE_operator_expression = 12, RULE_args = 13, RULE_primary_expression = 14, 
-		RULE_literal = 15, RULE_id = 16;
+		RULE_expression = 11, RULE_operator_expression = 12, RULE_assign_operator = 13, 
+		RULE_field_get = 14, RULE_field_set = 15, RULE_function_call = 16, RULE_method_call = 17, 
+		RULE_index_get = 18, RULE_index_set = 19, RULE_args = 20, RULE_primary_expression = 21, 
+		RULE_literal = 22, RULE_id = 23;
 	private static String[] makeRuleNames() {
 		return new String[] {
 			"wynnScript", "header", "function", "parameters", "statements", "statement", 
 			"var_declaration", "if_statement", "while_statement", "for_statement", 
-			"control_statement", "expression", "operator_expression", "args", "primary_expression", 
-			"literal", "id"
+			"control_statement", "expression", "operator_expression", "assign_operator", 
+			"field_get", "field_set", "function_call", "method_call", "index_get", 
+			"index_set", "args", "primary_expression", "literal", "id"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -143,31 +146,31 @@ public class WynnScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(35);
+			setState(49);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==HASH) {
 				{
-				setState(34);
+				setState(48);
 				header();
 				}
 			}
 
-			setState(40);
+			setState(54);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==FUNCTION) {
 				{
 				{
-				setState(37);
+				setState(51);
 				function();
 				}
 				}
-				setState(42);
+				setState(56);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(43);
+			setState(57);
 			match(EOF);
 			}
 		}
@@ -199,9 +202,9 @@ public class WynnScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(45);
+			setState(59);
 			match(HASH);
-			setState(46);
+			setState(60);
 			id();
 			}
 		}
@@ -242,25 +245,25 @@ public class WynnScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(48);
+			setState(62);
 			match(FUNCTION);
-			setState(49);
+			setState(63);
 			id();
-			setState(50);
+			setState(64);
 			match(LPAREN);
-			setState(52);
+			setState(66);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==Identifier) {
 				{
-				setState(51);
+				setState(65);
 				parameters();
 				}
 			}
 
-			setState(54);
+			setState(68);
 			match(RPAREN);
-			setState(55);
+			setState(69);
 			statements();
 			}
 		}
@@ -299,21 +302,21 @@ public class WynnScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(57);
+			setState(71);
 			id();
-			setState(62);
+			setState(76);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				setState(58);
+				setState(72);
 				match(COMMA);
-				setState(59);
+				setState(73);
 				id();
 				}
 				}
-				setState(64);
+				setState(78);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -352,23 +355,23 @@ public class WynnScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(65);
+			setState(79);
 			match(LCURL);
-			setState(69);
+			setState(83);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (((((_la - 9)) & ~0x3f) == 0 && ((1L << (_la - 9)) & ((1L << (ELLIPSIS - 9)) | (1L << (PLUS - 9)) | (1L << (DASH - 9)) | (1L << (LPAREN - 9)) | (1L << (BANG - 9)) | (1L << (TILDE - 9)) | (1L << (INC - 9)) | (1L << (DEC - 9)) | (1L << (VAR - 9)) | (1L << (IF - 9)) | (1L << (WHILE - 9)) | (1L << (DO - 9)) | (1L << (FOR - 9)) | (1L << (CONTINUE - 9)) | (1L << (BREAK - 9)) | (1L << (RETURN - 9)) | (1L << (YIELD - 9)) | (1L << (TRUE - 9)) | (1L << (FALSE - 9)) | (1L << (NULL - 9)) | (1L << (StringLiteral - 9)) | (1L << (NumberLiteral - 9)) | (1L << (HexLiteral - 9)) | (1L << (BinLiteral - 9)) | (1L << (Identifier - 9)))) != 0)) {
 				{
 				{
-				setState(66);
+				setState(80);
 				statement();
 				}
 				}
-				setState(71);
+				setState(85);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(72);
+			setState(86);
 			match(RCURL);
 			}
 		}
@@ -438,16 +441,16 @@ public class WynnScriptParser extends Parser {
 		StatementContext _localctx = new StatementContext(_ctx, getState());
 		enterRule(_localctx, 10, RULE_statement);
 		try {
-			setState(86);
+			setState(100);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case VAR:
 				_localctx = new VarContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(74);
+				setState(88);
 				var_declaration();
-				setState(75);
+				setState(89);
 				match(SEMI);
 				}
 				break;
@@ -455,7 +458,7 @@ public class WynnScriptParser extends Parser {
 				_localctx = new IfContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(77);
+				setState(91);
 				if_statement();
 				}
 				break;
@@ -464,7 +467,7 @@ public class WynnScriptParser extends Parser {
 				_localctx = new WhileContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(78);
+				setState(92);
 				while_statement();
 				}
 				break;
@@ -472,7 +475,7 @@ public class WynnScriptParser extends Parser {
 				_localctx = new ForContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(79);
+				setState(93);
 				for_statement();
 				}
 				break;
@@ -483,9 +486,9 @@ public class WynnScriptParser extends Parser {
 				_localctx = new ControlContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(80);
+				setState(94);
 				control_statement();
-				setState(81);
+				setState(95);
 				match(SEMI);
 				}
 				break;
@@ -508,9 +511,9 @@ public class WynnScriptParser extends Parser {
 				_localctx = new ExContext(_localctx);
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(83);
+				setState(97);
 				expression();
-				setState(84);
+				setState(98);
 				match(SEMI);
 				}
 				break;
@@ -550,13 +553,13 @@ public class WynnScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(88);
+			setState(102);
 			match(VAR);
-			setState(89);
+			setState(103);
 			id();
-			setState(90);
+			setState(104);
 			match(EQ);
-			setState(91);
+			setState(105);
 			expression();
 			}
 		}
@@ -613,45 +616,45 @@ public class WynnScriptParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(93);
-			match(IF);
-			setState(94);
-			match(LPAREN);
-			setState(95);
-			expression();
-			setState(96);
-			match(RPAREN);
-			setState(97);
-			statements();
 			setState(107);
+			match(IF);
+			setState(108);
+			match(LPAREN);
+			setState(109);
+			expression();
+			setState(110);
+			match(RPAREN);
+			setState(111);
+			statements();
+			setState(121);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,6,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					{
-					setState(98);
+					setState(112);
 					match(ELSE);
-					setState(99);
+					setState(113);
 					match(IF);
-					setState(100);
+					setState(114);
 					match(LPAREN);
-					setState(101);
+					setState(115);
 					expression();
-					setState(102);
+					setState(116);
 					match(RPAREN);
-					setState(103);
+					setState(117);
 					statements();
 					}
 					} 
 				}
-				setState(109);
+				setState(123);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,6,_ctx);
 			}
-			setState(110);
+			setState(124);
 			match(ELSE);
-			setState(111);
+			setState(125);
 			statements();
 			}
 		}
@@ -687,38 +690,38 @@ public class WynnScriptParser extends Parser {
 		While_statementContext _localctx = new While_statementContext(_ctx, getState());
 		enterRule(_localctx, 16, RULE_while_statement);
 		try {
-			setState(126);
+			setState(140);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case WHILE:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(113);
+				setState(127);
 				match(WHILE);
-				setState(114);
+				setState(128);
 				match(LPAREN);
-				setState(115);
+				setState(129);
 				expression();
-				setState(116);
+				setState(130);
 				match(RPAREN);
-				setState(117);
+				setState(131);
 				statements();
 				}
 				break;
 			case DO:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(119);
+				setState(133);
 				match(DO);
-				setState(120);
+				setState(134);
 				statements();
-				setState(121);
+				setState(135);
 				match(WHILE);
-				setState(122);
+				setState(136);
 				match(LPAREN);
-				setState(123);
+				setState(137);
 				expression();
-				setState(124);
+				setState(138);
 				match(RPAREN);
 				}
 				break;
@@ -763,19 +766,19 @@ public class WynnScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(128);
+			setState(142);
 			match(FOR);
-			setState(129);
+			setState(143);
 			match(LPAREN);
-			setState(130);
+			setState(144);
 			id();
-			setState(131);
+			setState(145);
 			match(IN);
-			setState(132);
+			setState(146);
 			expression();
-			setState(133);
+			setState(147);
 			match(RPAREN);
-			setState(134);
+			setState(148);
 			statements();
 			}
 		}
@@ -809,34 +812,34 @@ public class WynnScriptParser extends Parser {
 		enterRule(_localctx, 20, RULE_control_statement);
 		int _la;
 		try {
-			setState(146);
+			setState(160);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case BREAK:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(136);
+				setState(150);
 				match(BREAK);
 				}
 				break;
 			case CONTINUE:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(137);
+				setState(151);
 				match(CONTINUE);
 				}
 				break;
 			case RETURN:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(138);
+				setState(152);
 				match(RETURN);
-				setState(140);
+				setState(154);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (((((_la - 9)) & ~0x3f) == 0 && ((1L << (_la - 9)) & ((1L << (ELLIPSIS - 9)) | (1L << (PLUS - 9)) | (1L << (DASH - 9)) | (1L << (LPAREN - 9)) | (1L << (BANG - 9)) | (1L << (TILDE - 9)) | (1L << (INC - 9)) | (1L << (DEC - 9)) | (1L << (TRUE - 9)) | (1L << (FALSE - 9)) | (1L << (NULL - 9)) | (1L << (StringLiteral - 9)) | (1L << (NumberLiteral - 9)) | (1L << (HexLiteral - 9)) | (1L << (BinLiteral - 9)) | (1L << (Identifier - 9)))) != 0)) {
 					{
-					setState(139);
+					setState(153);
 					expression();
 					}
 				}
@@ -846,14 +849,14 @@ public class WynnScriptParser extends Parser {
 			case YIELD:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(142);
+				setState(156);
 				match(YIELD);
-				setState(144);
+				setState(158);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (((((_la - 9)) & ~0x3f) == 0 && ((1L << (_la - 9)) & ((1L << (ELLIPSIS - 9)) | (1L << (PLUS - 9)) | (1L << (DASH - 9)) | (1L << (LPAREN - 9)) | (1L << (BANG - 9)) | (1L << (TILDE - 9)) | (1L << (INC - 9)) | (1L << (DEC - 9)) | (1L << (TRUE - 9)) | (1L << (FALSE - 9)) | (1L << (NULL - 9)) | (1L << (StringLiteral - 9)) | (1L << (NumberLiteral - 9)) | (1L << (HexLiteral - 9)) | (1L << (BinLiteral - 9)) | (1L << (Identifier - 9)))) != 0)) {
 					{
-					setState(143);
+					setState(157);
 					expression();
 					}
 				}
@@ -876,23 +879,122 @@ public class WynnScriptParser extends Parser {
 	}
 
 	public static class ExpressionContext extends ParserRuleContext {
-		public Operator_expressionContext operator_expression() {
-			return getRuleContext(Operator_expressionContext.class,0);
-		}
 		public ExpressionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_expression; }
+	 
+		public ExpressionContext() { }
+		public void copyFrom(ExpressionContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class SetFieldContext extends ExpressionContext {
+		public Field_setContext field_set() {
+			return getRuleContext(Field_setContext.class,0);
+		}
+		public SetFieldContext(ExpressionContext ctx) { copyFrom(ctx); }
+	}
+	public static class MethodContext extends ExpressionContext {
+		public Method_callContext method_call() {
+			return getRuleContext(Method_callContext.class,0);
+		}
+		public MethodContext(ExpressionContext ctx) { copyFrom(ctx); }
+	}
+	public static class GetIndexContext extends ExpressionContext {
+		public Index_getContext index_get() {
+			return getRuleContext(Index_getContext.class,0);
+		}
+		public GetIndexContext(ExpressionContext ctx) { copyFrom(ctx); }
+	}
+	public static class SetIndexContext extends ExpressionContext {
+		public Index_setContext index_set() {
+			return getRuleContext(Index_setContext.class,0);
+		}
+		public SetIndexContext(ExpressionContext ctx) { copyFrom(ctx); }
+	}
+	public static class GetFieldContext extends ExpressionContext {
+		public Field_getContext field_get() {
+			return getRuleContext(Field_getContext.class,0);
+		}
+		public GetFieldContext(ExpressionContext ctx) { copyFrom(ctx); }
+	}
+	public static class InvokeContext extends ExpressionContext {
+		public Function_callContext function_call() {
+			return getRuleContext(Function_callContext.class,0);
+		}
+		public InvokeContext(ExpressionContext ctx) { copyFrom(ctx); }
+	}
+	public static class OperatorContext extends ExpressionContext {
+		public Operator_expressionContext operator_expression() {
+			return getRuleContext(Operator_expressionContext.class,0);
+		}
+		public OperatorContext(ExpressionContext ctx) { copyFrom(ctx); }
 	}
 
 	public final ExpressionContext expression() throws RecognitionException {
 		ExpressionContext _localctx = new ExpressionContext(_ctx, getState());
 		enterRule(_localctx, 22, RULE_expression);
 		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(148);
-			operator_expression(0);
+			setState(169);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,11,_ctx) ) {
+			case 1:
+				_localctx = new OperatorContext(_localctx);
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(162);
+				operator_expression(0);
+				}
+				break;
+			case 2:
+				_localctx = new GetFieldContext(_localctx);
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(163);
+				field_get(0);
+				}
+				break;
+			case 3:
+				_localctx = new SetFieldContext(_localctx);
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(164);
+				field_set();
+				}
+				break;
+			case 4:
+				_localctx = new InvokeContext(_localctx);
+				enterOuterAlt(_localctx, 4);
+				{
+				setState(165);
+				function_call();
+				}
+				break;
+			case 5:
+				_localctx = new MethodContext(_localctx);
+				enterOuterAlt(_localctx, 5);
+				{
+				setState(166);
+				method_call();
+				}
+				break;
+			case 6:
+				_localctx = new GetIndexContext(_localctx);
+				enterOuterAlt(_localctx, 6);
+				{
+				setState(167);
+				index_get();
+				}
+				break;
+			case 7:
+				_localctx = new SetIndexContext(_localctx);
+				enterOuterAlt(_localctx, 7);
+				{
+				setState(168);
+				index_set();
+				}
+				break;
 			}
 		}
 		catch (RecognitionException re) {
@@ -955,23 +1057,6 @@ public class WynnScriptParser extends Parser {
 		}
 		public TerminalNode OR() { return getToken(WynnScriptParser.OR, 0); }
 		public OrContext(Operator_expressionContext ctx) { copyFrom(ctx); }
-	}
-	public static class AccessContext extends Operator_expressionContext {
-		public List<Operator_expressionContext> operator_expression() {
-			return getRuleContexts(Operator_expressionContext.class);
-		}
-		public Operator_expressionContext operator_expression(int i) {
-			return getRuleContext(Operator_expressionContext.class,i);
-		}
-		public TerminalNode DOT() { return getToken(WynnScriptParser.DOT, 0); }
-		public TerminalNode LSQUARE() { return getToken(WynnScriptParser.LSQUARE, 0); }
-		public TerminalNode RSQUARE() { return getToken(WynnScriptParser.RSQUARE, 0); }
-		public TerminalNode LPAREN() { return getToken(WynnScriptParser.LPAREN, 0); }
-		public TerminalNode RPAREN() { return getToken(WynnScriptParser.RPAREN, 0); }
-		public ArgsContext args() {
-			return getRuleContext(ArgsContext.class,0);
-		}
-		public AccessContext(Operator_expressionContext ctx) { copyFrom(ctx); }
 	}
 	public static class ConditionalContext extends Operator_expressionContext {
 		public List<Operator_expressionContext> operator_expression() {
@@ -1053,27 +1138,23 @@ public class WynnScriptParser extends Parser {
 		public TerminalNode NEQ() { return getToken(WynnScriptParser.NEQ, 0); }
 		public EqualityContext(Operator_expressionContext ctx) { copyFrom(ctx); }
 	}
+	public static class AssignContext extends Operator_expressionContext {
+		public IdContext id() {
+			return getRuleContext(IdContext.class,0);
+		}
+		public Assign_operatorContext assign_operator() {
+			return getRuleContext(Assign_operatorContext.class,0);
+		}
+		public Operator_expressionContext operator_expression() {
+			return getRuleContext(Operator_expressionContext.class,0);
+		}
+		public AssignContext(Operator_expressionContext ctx) { copyFrom(ctx); }
+	}
 	public static class PrimaryContext extends Operator_expressionContext {
 		public Primary_expressionContext primary_expression() {
 			return getRuleContext(Primary_expressionContext.class,0);
 		}
 		public PrimaryContext(Operator_expressionContext ctx) { copyFrom(ctx); }
-	}
-	public static class AssignContext extends Operator_expressionContext {
-		public List<Operator_expressionContext> operator_expression() {
-			return getRuleContexts(Operator_expressionContext.class);
-		}
-		public Operator_expressionContext operator_expression(int i) {
-			return getRuleContext(Operator_expressionContext.class,i);
-		}
-		public TerminalNode EQ() { return getToken(WynnScriptParser.EQ, 0); }
-		public TerminalNode PLUS_EQ() { return getToken(WynnScriptParser.PLUS_EQ, 0); }
-		public TerminalNode MINUS_EQ() { return getToken(WynnScriptParser.MINUS_EQ, 0); }
-		public TerminalNode TIMES_EQ() { return getToken(WynnScriptParser.TIMES_EQ, 0); }
-		public TerminalNode DIV_EQ() { return getToken(WynnScriptParser.DIV_EQ, 0); }
-		public TerminalNode MOD_EQ() { return getToken(WynnScriptParser.MOD_EQ, 0); }
-		public TerminalNode POW_EQ() { return getToken(WynnScriptParser.POW_EQ, 0); }
-		public AssignContext(Operator_expressionContext ctx) { copyFrom(ctx); }
 	}
 
 	public final Operator_expressionContext operator_expression() throws RecognitionException {
@@ -1092,21 +1173,16 @@ public class WynnScriptParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(156);
+			setState(181);
 			_errHandler.sync(this);
-			switch (_input.LA(1)) {
-			case PLUS:
-			case DASH:
-			case BANG:
-			case TILDE:
-			case INC:
-			case DEC:
+			switch ( getInterpreter().adaptivePredict(_input,12,_ctx) ) {
+			case 1:
 				{
 				_localctx = new PrefixContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
 
-				setState(151);
+				setState(172);
 				_la = _input.LA(1);
 				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << PLUS) | (1L << DASH) | (1L << BANG) | (1L << TILDE) | (1L << INC) | (1L << DEC))) != 0)) ) {
 				_errHandler.recoverInline(this);
@@ -1116,62 +1192,65 @@ public class WynnScriptParser extends Parser {
 					_errHandler.reportMatch(this);
 					consume();
 				}
-				setState(152);
+				setState(173);
 				operator_expression(12);
 				}
 				break;
-			case ELLIPSIS:
+			case 2:
+				{
+				_localctx = new AssignContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(174);
+				id();
+				setState(175);
+				assign_operator();
+				setState(176);
+				operator_expression(3);
+				}
+				break;
+			case 3:
 				{
 				_localctx = new SpreadContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(153);
+				setState(178);
 				match(ELLIPSIS);
-				setState(154);
+				setState(179);
 				operator_expression(2);
 				}
 				break;
-			case LPAREN:
-			case TRUE:
-			case FALSE:
-			case NULL:
-			case StringLiteral:
-			case NumberLiteral:
-			case HexLiteral:
-			case BinLiteral:
-			case Identifier:
+			case 4:
 				{
 				_localctx = new PrimaryContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(155);
+				setState(180);
 				primary_expression();
 				}
 				break;
-			default:
-				throw new NoViableAltException(this);
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(207);
+			setState(214);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,16,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,14,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(205);
+					setState(212);
 					_errHandler.sync(this);
-					switch ( getInterpreter().adaptivePredict(_input,15,_ctx) ) {
+					switch ( getInterpreter().adaptivePredict(_input,13,_ctx) ) {
 					case 1:
 						{
 						_localctx = new PowerContext(new Operator_expressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_operator_expression);
-						setState(158);
+						setState(183);
 						if (!(precpred(_ctx, 11))) throw new FailedPredicateException(this, "precpred(_ctx, 11)");
-						setState(159);
+						setState(184);
 						match(POW);
-						setState(160);
+						setState(185);
 						operator_expression(12);
 						}
 						break;
@@ -1179,9 +1258,9 @@ public class WynnScriptParser extends Parser {
 						{
 						_localctx = new ProductContext(new Operator_expressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_operator_expression);
-						setState(161);
+						setState(186);
 						if (!(precpred(_ctx, 10))) throw new FailedPredicateException(this, "precpred(_ctx, 10)");
-						setState(162);
+						setState(187);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << STAR) | (1L << SLASH) | (1L << PERCENT))) != 0)) ) {
 						_errHandler.recoverInline(this);
@@ -1191,7 +1270,7 @@ public class WynnScriptParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(163);
+						setState(188);
 						operator_expression(11);
 						}
 						break;
@@ -1199,9 +1278,9 @@ public class WynnScriptParser extends Parser {
 						{
 						_localctx = new SumContext(new Operator_expressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_operator_expression);
-						setState(164);
+						setState(189);
 						if (!(precpred(_ctx, 9))) throw new FailedPredicateException(this, "precpred(_ctx, 9)");
-						setState(165);
+						setState(190);
 						_la = _input.LA(1);
 						if ( !(_la==PLUS || _la==DASH) ) {
 						_errHandler.recoverInline(this);
@@ -1211,7 +1290,7 @@ public class WynnScriptParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(166);
+						setState(191);
 						operator_expression(10);
 						}
 						break;
@@ -1219,9 +1298,9 @@ public class WynnScriptParser extends Parser {
 						{
 						_localctx = new ComparisonContext(new Operator_expressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_operator_expression);
-						setState(167);
+						setState(192);
 						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
-						setState(168);
+						setState(193);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << LANGLE) | (1L << RANGLE) | (1L << LE) | (1L << GE) | (1L << IN) | (1L << IS) | (1L << NOT_IN) | (1L << NOT_IS))) != 0)) ) {
 						_errHandler.recoverInline(this);
@@ -1231,7 +1310,7 @@ public class WynnScriptParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(169);
+						setState(194);
 						operator_expression(9);
 						}
 						break;
@@ -1239,9 +1318,9 @@ public class WynnScriptParser extends Parser {
 						{
 						_localctx = new EqualityContext(new Operator_expressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_operator_expression);
-						setState(170);
+						setState(195);
 						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
-						setState(171);
+						setState(196);
 						_la = _input.LA(1);
 						if ( !(_la==EQEQ || _la==NEQ) ) {
 						_errHandler.recoverInline(this);
@@ -1251,7 +1330,7 @@ public class WynnScriptParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(172);
+						setState(197);
 						operator_expression(8);
 						}
 						break;
@@ -1259,11 +1338,11 @@ public class WynnScriptParser extends Parser {
 						{
 						_localctx = new AndContext(new Operator_expressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_operator_expression);
-						setState(173);
+						setState(198);
 						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
-						setState(174);
+						setState(199);
 						match(AND);
-						setState(175);
+						setState(200);
 						operator_expression(7);
 						}
 						break;
@@ -1271,11 +1350,11 @@ public class WynnScriptParser extends Parser {
 						{
 						_localctx = new OrContext(new Operator_expressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_operator_expression);
-						setState(176);
+						setState(201);
 						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
-						setState(177);
+						setState(202);
 						match(OR);
-						setState(178);
+						setState(203);
 						operator_expression(6);
 						}
 						break;
@@ -1283,103 +1362,25 @@ public class WynnScriptParser extends Parser {
 						{
 						_localctx = new ConditionalContext(new Operator_expressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_operator_expression);
-						setState(179);
+						setState(204);
 						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
-						setState(180);
+						setState(205);
 						match(QUEST);
-						setState(181);
+						setState(206);
 						operator_expression(0);
-						setState(182);
+						setState(207);
 						match(COLON);
-						setState(183);
-						operator_expression(5);
+						setState(208);
+						operator_expression(4);
 						}
 						break;
 					case 9:
 						{
-						_localctx = new AssignContext(new Operator_expressionContext(_parentctx, _parentState));
-						pushNewRecursionContext(_localctx, _startState, RULE_operator_expression);
-						setState(185);
-						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
-						setState(186);
-						_la = _input.LA(1);
-						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << EQ) | (1L << PLUS_EQ) | (1L << MINUS_EQ) | (1L << TIMES_EQ) | (1L << POW_EQ) | (1L << DIV_EQ) | (1L << MOD_EQ))) != 0)) ) {
-						_errHandler.recoverInline(this);
-						}
-						else {
-							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-							_errHandler.reportMatch(this);
-							consume();
-						}
-						setState(187);
-						operator_expression(4);
-						}
-						break;
-					case 10:
-						{
-						_localctx = new AccessContext(new Operator_expressionContext(_parentctx, _parentState));
-						pushNewRecursionContext(_localctx, _startState, RULE_operator_expression);
-						setState(188);
-						if (!(precpred(_ctx, 14))) throw new FailedPredicateException(this, "precpred(_ctx, 14)");
-						setState(201);
-						_errHandler.sync(this);
-						switch (_input.LA(1)) {
-						case DOT:
-							{
-							setState(189);
-							match(DOT);
-							setState(190);
-							operator_expression(0);
-							}
-							break;
-						case LSQUARE:
-							{
-							setState(191);
-							match(LSQUARE);
-							setState(193);
-							_errHandler.sync(this);
-							_la = _input.LA(1);
-							if (((((_la - 9)) & ~0x3f) == 0 && ((1L << (_la - 9)) & ((1L << (ELLIPSIS - 9)) | (1L << (PLUS - 9)) | (1L << (DASH - 9)) | (1L << (LPAREN - 9)) | (1L << (BANG - 9)) | (1L << (TILDE - 9)) | (1L << (INC - 9)) | (1L << (DEC - 9)) | (1L << (TRUE - 9)) | (1L << (FALSE - 9)) | (1L << (NULL - 9)) | (1L << (StringLiteral - 9)) | (1L << (NumberLiteral - 9)) | (1L << (HexLiteral - 9)) | (1L << (BinLiteral - 9)) | (1L << (Identifier - 9)))) != 0)) {
-								{
-								setState(192);
-								args();
-								}
-							}
-
-							setState(195);
-							match(RSQUARE);
-							}
-							break;
-						case LPAREN:
-							{
-							setState(196);
-							match(LPAREN);
-							setState(198);
-							_errHandler.sync(this);
-							_la = _input.LA(1);
-							if (((((_la - 9)) & ~0x3f) == 0 && ((1L << (_la - 9)) & ((1L << (ELLIPSIS - 9)) | (1L << (PLUS - 9)) | (1L << (DASH - 9)) | (1L << (LPAREN - 9)) | (1L << (BANG - 9)) | (1L << (TILDE - 9)) | (1L << (INC - 9)) | (1L << (DEC - 9)) | (1L << (TRUE - 9)) | (1L << (FALSE - 9)) | (1L << (NULL - 9)) | (1L << (StringLiteral - 9)) | (1L << (NumberLiteral - 9)) | (1L << (HexLiteral - 9)) | (1L << (BinLiteral - 9)) | (1L << (Identifier - 9)))) != 0)) {
-								{
-								setState(197);
-								args();
-								}
-							}
-
-							setState(200);
-							match(RPAREN);
-							}
-							break;
-						default:
-							throw new NoViableAltException(this);
-						}
-						}
-						break;
-					case 11:
-						{
 						_localctx = new PostfixContext(new Operator_expressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_operator_expression);
-						setState(203);
+						setState(210);
 						if (!(precpred(_ctx, 13))) throw new FailedPredicateException(this, "precpred(_ctx, 13)");
-						setState(204);
+						setState(211);
 						_la = _input.LA(1);
 						if ( !(_la==INC || _la==DEC) ) {
 						_errHandler.recoverInline(this);
@@ -1394,9 +1395,9 @@ public class WynnScriptParser extends Parser {
 					}
 					} 
 				}
-				setState(209);
+				setState(216);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,16,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,14,_ctx);
 			}
 			}
 		}
@@ -1407,6 +1408,350 @@ public class WynnScriptParser extends Parser {
 		}
 		finally {
 			unrollRecursionContexts(_parentctx);
+		}
+		return _localctx;
+	}
+
+	public static class Assign_operatorContext extends ParserRuleContext {
+		public TerminalNode EQ() { return getToken(WynnScriptParser.EQ, 0); }
+		public TerminalNode PLUS_EQ() { return getToken(WynnScriptParser.PLUS_EQ, 0); }
+		public TerminalNode MINUS_EQ() { return getToken(WynnScriptParser.MINUS_EQ, 0); }
+		public TerminalNode TIMES_EQ() { return getToken(WynnScriptParser.TIMES_EQ, 0); }
+		public TerminalNode DIV_EQ() { return getToken(WynnScriptParser.DIV_EQ, 0); }
+		public TerminalNode MOD_EQ() { return getToken(WynnScriptParser.MOD_EQ, 0); }
+		public TerminalNode POW_EQ() { return getToken(WynnScriptParser.POW_EQ, 0); }
+		public Assign_operatorContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_assign_operator; }
+	}
+
+	public final Assign_operatorContext assign_operator() throws RecognitionException {
+		Assign_operatorContext _localctx = new Assign_operatorContext(_ctx, getState());
+		enterRule(_localctx, 26, RULE_assign_operator);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(217);
+			_la = _input.LA(1);
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << EQ) | (1L << PLUS_EQ) | (1L << MINUS_EQ) | (1L << TIMES_EQ) | (1L << POW_EQ) | (1L << DIV_EQ) | (1L << MOD_EQ))) != 0)) ) {
+			_errHandler.recoverInline(this);
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
+				consume();
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class Field_getContext extends ParserRuleContext {
+		public Primary_expressionContext primary_expression() {
+			return getRuleContext(Primary_expressionContext.class,0);
+		}
+		public Field_getContext field_get() {
+			return getRuleContext(Field_getContext.class,0);
+		}
+		public TerminalNode DOT() { return getToken(WynnScriptParser.DOT, 0); }
+		public IdContext id() {
+			return getRuleContext(IdContext.class,0);
+		}
+		public Field_getContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_field_get; }
+	}
+
+	public final Field_getContext field_get() throws RecognitionException {
+		return field_get(0);
+	}
+
+	private Field_getContext field_get(int _p) throws RecognitionException {
+		ParserRuleContext _parentctx = _ctx;
+		int _parentState = getState();
+		Field_getContext _localctx = new Field_getContext(_ctx, _parentState);
+		Field_getContext _prevctx = _localctx;
+		int _startState = 28;
+		enterRecursionRule(_localctx, 28, RULE_field_get, _p);
+		try {
+			int _alt;
+			enterOuterAlt(_localctx, 1);
+			{
+			{
+			setState(220);
+			primary_expression();
+			}
+			_ctx.stop = _input.LT(-1);
+			setState(227);
+			_errHandler.sync(this);
+			_alt = getInterpreter().adaptivePredict(_input,15,_ctx);
+			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
+				if ( _alt==1 ) {
+					if ( _parseListeners!=null ) triggerExitRuleEvent();
+					_prevctx = _localctx;
+					{
+					{
+					_localctx = new Field_getContext(_parentctx, _parentState);
+					pushNewRecursionContext(_localctx, _startState, RULE_field_get);
+					setState(222);
+					if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
+					setState(223);
+					match(DOT);
+					setState(224);
+					id();
+					}
+					} 
+				}
+				setState(229);
+				_errHandler.sync(this);
+				_alt = getInterpreter().adaptivePredict(_input,15,_ctx);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			unrollRecursionContexts(_parentctx);
+		}
+		return _localctx;
+	}
+
+	public static class Field_setContext extends ParserRuleContext {
+		public Field_getContext field_get() {
+			return getRuleContext(Field_getContext.class,0);
+		}
+		public Assign_operatorContext assign_operator() {
+			return getRuleContext(Assign_operatorContext.class,0);
+		}
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public Field_setContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_field_set; }
+	}
+
+	public final Field_setContext field_set() throws RecognitionException {
+		Field_setContext _localctx = new Field_setContext(_ctx, getState());
+		enterRule(_localctx, 30, RULE_field_set);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(230);
+			field_get(0);
+			setState(231);
+			assign_operator();
+			setState(232);
+			expression();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class Function_callContext extends ParserRuleContext {
+		public IdContext id() {
+			return getRuleContext(IdContext.class,0);
+		}
+		public TerminalNode LPAREN() { return getToken(WynnScriptParser.LPAREN, 0); }
+		public TerminalNode RPAREN() { return getToken(WynnScriptParser.RPAREN, 0); }
+		public ArgsContext args() {
+			return getRuleContext(ArgsContext.class,0);
+		}
+		public Function_callContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_function_call; }
+	}
+
+	public final Function_callContext function_call() throws RecognitionException {
+		Function_callContext _localctx = new Function_callContext(_ctx, getState());
+		enterRule(_localctx, 32, RULE_function_call);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(234);
+			id();
+			setState(235);
+			match(LPAREN);
+			setState(237);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (((((_la - 9)) & ~0x3f) == 0 && ((1L << (_la - 9)) & ((1L << (ELLIPSIS - 9)) | (1L << (PLUS - 9)) | (1L << (DASH - 9)) | (1L << (LPAREN - 9)) | (1L << (BANG - 9)) | (1L << (TILDE - 9)) | (1L << (INC - 9)) | (1L << (DEC - 9)) | (1L << (TRUE - 9)) | (1L << (FALSE - 9)) | (1L << (NULL - 9)) | (1L << (StringLiteral - 9)) | (1L << (NumberLiteral - 9)) | (1L << (HexLiteral - 9)) | (1L << (BinLiteral - 9)) | (1L << (Identifier - 9)))) != 0)) {
+				{
+				setState(236);
+				args();
+				}
+			}
+
+			setState(239);
+			match(RPAREN);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class Method_callContext extends ParserRuleContext {
+		public Field_getContext field_get() {
+			return getRuleContext(Field_getContext.class,0);
+		}
+		public TerminalNode LPAREN() { return getToken(WynnScriptParser.LPAREN, 0); }
+		public TerminalNode RPAREN() { return getToken(WynnScriptParser.RPAREN, 0); }
+		public ArgsContext args() {
+			return getRuleContext(ArgsContext.class,0);
+		}
+		public Method_callContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_method_call; }
+	}
+
+	public final Method_callContext method_call() throws RecognitionException {
+		Method_callContext _localctx = new Method_callContext(_ctx, getState());
+		enterRule(_localctx, 34, RULE_method_call);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(241);
+			field_get(0);
+			setState(242);
+			match(LPAREN);
+			setState(244);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (((((_la - 9)) & ~0x3f) == 0 && ((1L << (_la - 9)) & ((1L << (ELLIPSIS - 9)) | (1L << (PLUS - 9)) | (1L << (DASH - 9)) | (1L << (LPAREN - 9)) | (1L << (BANG - 9)) | (1L << (TILDE - 9)) | (1L << (INC - 9)) | (1L << (DEC - 9)) | (1L << (TRUE - 9)) | (1L << (FALSE - 9)) | (1L << (NULL - 9)) | (1L << (StringLiteral - 9)) | (1L << (NumberLiteral - 9)) | (1L << (HexLiteral - 9)) | (1L << (BinLiteral - 9)) | (1L << (Identifier - 9)))) != 0)) {
+				{
+				setState(243);
+				args();
+				}
+			}
+
+			setState(246);
+			match(RPAREN);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class Index_getContext extends ParserRuleContext {
+		public Field_getContext field_get() {
+			return getRuleContext(Field_getContext.class,0);
+		}
+		public TerminalNode LSQUARE() { return getToken(WynnScriptParser.LSQUARE, 0); }
+		public ArgsContext args() {
+			return getRuleContext(ArgsContext.class,0);
+		}
+		public TerminalNode RSQUARE() { return getToken(WynnScriptParser.RSQUARE, 0); }
+		public Index_getContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_index_get; }
+	}
+
+	public final Index_getContext index_get() throws RecognitionException {
+		Index_getContext _localctx = new Index_getContext(_ctx, getState());
+		enterRule(_localctx, 36, RULE_index_get);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(248);
+			field_get(0);
+			setState(249);
+			match(LSQUARE);
+			setState(250);
+			args();
+			setState(251);
+			match(RSQUARE);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class Index_setContext extends ParserRuleContext {
+		public Index_getContext index_get() {
+			return getRuleContext(Index_getContext.class,0);
+		}
+		public Assign_operatorContext assign_operator() {
+			return getRuleContext(Assign_operatorContext.class,0);
+		}
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public Index_setContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_index_set; }
+	}
+
+	public final Index_setContext index_set() throws RecognitionException {
+		Index_setContext _localctx = new Index_setContext(_ctx, getState());
+		enterRule(_localctx, 38, RULE_index_set);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(253);
+			index_get();
+			setState(254);
+			assign_operator();
+			setState(255);
+			expression();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
 		}
 		return _localctx;
 	}
@@ -1430,26 +1775,26 @@ public class WynnScriptParser extends Parser {
 
 	public final ArgsContext args() throws RecognitionException {
 		ArgsContext _localctx = new ArgsContext(_ctx, getState());
-		enterRule(_localctx, 26, RULE_args);
+		enterRule(_localctx, 40, RULE_args);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(210);
+			setState(257);
 			expression();
-			setState(215);
+			setState(262);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				setState(211);
+				setState(258);
 				match(COMMA);
-				setState(212);
+				setState(259);
 				expression();
 				}
 				}
-				setState(217);
+				setState(264);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -1500,20 +1845,20 @@ public class WynnScriptParser extends Parser {
 
 	public final Primary_expressionContext primary_expression() throws RecognitionException {
 		Primary_expressionContext _localctx = new Primary_expressionContext(_ctx, getState());
-		enterRule(_localctx, 28, RULE_primary_expression);
+		enterRule(_localctx, 42, RULE_primary_expression);
 		try {
-			setState(224);
+			setState(271);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case LPAREN:
 				_localctx = new ParenContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(218);
+				setState(265);
 				match(LPAREN);
-				setState(219);
+				setState(266);
 				expression();
-				setState(220);
+				setState(267);
 				match(RPAREN);
 				}
 				break;
@@ -1527,7 +1872,7 @@ public class WynnScriptParser extends Parser {
 				_localctx = new LitContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(222);
+				setState(269);
 				literal();
 				}
 				break;
@@ -1535,7 +1880,7 @@ public class WynnScriptParser extends Parser {
 				_localctx = new NameContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(223);
+				setState(270);
 				id();
 				}
 				break;
@@ -1570,12 +1915,12 @@ public class WynnScriptParser extends Parser {
 
 	public final LiteralContext literal() throws RecognitionException {
 		LiteralContext _localctx = new LiteralContext(_ctx, getState());
-		enterRule(_localctx, 30, RULE_literal);
+		enterRule(_localctx, 44, RULE_literal);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(226);
+			setState(273);
 			_la = _input.LA(1);
 			if ( !(((((_la - 61)) & ~0x3f) == 0 && ((1L << (_la - 61)) & ((1L << (TRUE - 61)) | (1L << (FALSE - 61)) | (1L << (NULL - 61)) | (1L << (StringLiteral - 61)) | (1L << (NumberLiteral - 61)) | (1L << (HexLiteral - 61)) | (1L << (BinLiteral - 61)))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -1608,11 +1953,11 @@ public class WynnScriptParser extends Parser {
 
 	public final IdContext id() throws RecognitionException {
 		IdContext _localctx = new IdContext(_ctx, getState());
-		enterRule(_localctx, 32, RULE_id);
+		enterRule(_localctx, 46, RULE_id);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(228);
+			setState(275);
 			match(Identifier);
 			}
 		}
@@ -1631,6 +1976,8 @@ public class WynnScriptParser extends Parser {
 		switch (ruleIndex) {
 		case 12:
 			return operator_expression_sempred((Operator_expressionContext)_localctx, predIndex);
+		case 14:
+			return field_get_sempred((Field_getContext)_localctx, predIndex);
 		}
 		return true;
 	}
@@ -1653,94 +2000,114 @@ public class WynnScriptParser extends Parser {
 		case 7:
 			return precpred(_ctx, 4);
 		case 8:
-			return precpred(_ctx, 3);
-		case 9:
-			return precpred(_ctx, 14);
-		case 10:
 			return precpred(_ctx, 13);
+		}
+		return true;
+	}
+	private boolean field_get_sempred(Field_getContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 9:
+			return precpred(_ctx, 2);
 		}
 		return true;
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3F\u00e9\4\2\t\2\4"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3F\u0118\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
-		"\3\2\5\2&\n\2\3\2\7\2)\n\2\f\2\16\2,\13\2\3\2\3\2\3\3\3\3\3\3\3\4\3\4"+
-		"\3\4\3\4\5\4\67\n\4\3\4\3\4\3\4\3\5\3\5\3\5\7\5?\n\5\f\5\16\5B\13\5\3"+
-		"\6\3\6\7\6F\n\6\f\6\16\6I\13\6\3\6\3\6\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7"+
-		"\3\7\3\7\3\7\3\7\5\7Y\n\7\3\b\3\b\3\b\3\b\3\b\3\t\3\t\3\t\3\t\3\t\3\t"+
-		"\3\t\3\t\3\t\3\t\3\t\3\t\7\tl\n\t\f\t\16\to\13\t\3\t\3\t\3\t\3\n\3\n\3"+
-		"\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\5\n\u0081\n\n\3\13\3\13\3\13"+
-		"\3\13\3\13\3\13\3\13\3\13\3\f\3\f\3\f\3\f\5\f\u008f\n\f\3\f\3\f\5\f\u0093"+
-		"\n\f\5\f\u0095\n\f\3\r\3\r\3\16\3\16\3\16\3\16\3\16\3\16\5\16\u009f\n"+
-		"\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3"+
-		"\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3"+
-		"\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\5\16\u00c4\n\16\3\16\3\16\3\16"+
-		"\5\16\u00c9\n\16\3\16\5\16\u00cc\n\16\3\16\3\16\7\16\u00d0\n\16\f\16\16"+
-		"\16\u00d3\13\16\3\17\3\17\3\17\7\17\u00d8\n\17\f\17\16\17\u00db\13\17"+
-		"\3\20\3\20\3\20\3\20\3\20\3\20\5\20\u00e3\n\20\3\21\3\21\3\22\3\22\3\22"+
-		"\2\3\32\23\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"\2\n\6\2\f\r!!##,"+
-		"-\4\2\16\16\20\21\3\2\f\r\5\2\30\31\35\36\658\3\2\33\34\4\2\32\32&+\3"+
-		"\2,-\3\2?E\2\u00fc\2%\3\2\2\2\4/\3\2\2\2\6\62\3\2\2\2\b;\3\2\2\2\nC\3"+
-		"\2\2\2\fX\3\2\2\2\16Z\3\2\2\2\20_\3\2\2\2\22\u0080\3\2\2\2\24\u0082\3"+
-		"\2\2\2\26\u0094\3\2\2\2\30\u0096\3\2\2\2\32\u009e\3\2\2\2\34\u00d4\3\2"+
-		"\2\2\36\u00e2\3\2\2\2 \u00e4\3\2\2\2\"\u00e6\3\2\2\2$&\5\4\3\2%$\3\2\2"+
-		"\2%&\3\2\2\2&*\3\2\2\2\')\5\6\4\2(\'\3\2\2\2),\3\2\2\2*(\3\2\2\2*+\3\2"+
-		"\2\2+-\3\2\2\2,*\3\2\2\2-.\7\2\2\3.\3\3\2\2\2/\60\7\"\2\2\60\61\5\"\22"+
-		"\2\61\5\3\2\2\2\62\63\7.\2\2\63\64\5\"\22\2\64\66\7\22\2\2\65\67\5\b\5"+
-		"\2\66\65\3\2\2\2\66\67\3\2\2\2\678\3\2\2\289\7\23\2\29:\5\n\6\2:\7\3\2"+
-		"\2\2;@\5\"\22\2<=\7\t\2\2=?\5\"\22\2><\3\2\2\2?B\3\2\2\2@>\3\2\2\2@A\3"+
-		"\2\2\2A\t\3\2\2\2B@\3\2\2\2CG\7\26\2\2DF\5\f\7\2ED\3\2\2\2FI\3\2\2\2G"+
-		"E\3\2\2\2GH\3\2\2\2HJ\3\2\2\2IG\3\2\2\2JK\7\27\2\2K\13\3\2\2\2LM\5\16"+
-		"\b\2MN\7\7\2\2NY\3\2\2\2OY\5\20\t\2PY\5\22\n\2QY\5\24\13\2RS\5\26\f\2"+
-		"ST\7\7\2\2TY\3\2\2\2UV\5\30\r\2VW\7\7\2\2WY\3\2\2\2XL\3\2\2\2XO\3\2\2"+
-		"\2XP\3\2\2\2XQ\3\2\2\2XR\3\2\2\2XU\3\2\2\2Y\r\3\2\2\2Z[\7/\2\2[\\\5\""+
-		"\22\2\\]\7\32\2\2]^\5\30\r\2^\17\3\2\2\2_`\7\60\2\2`a\7\22\2\2ab\5\30"+
-		"\r\2bc\7\23\2\2cm\5\n\6\2de\7\61\2\2ef\7\60\2\2fg\7\22\2\2gh\5\30\r\2"+
-		"hi\7\23\2\2ij\5\n\6\2jl\3\2\2\2kd\3\2\2\2lo\3\2\2\2mk\3\2\2\2mn\3\2\2"+
-		"\2np\3\2\2\2om\3\2\2\2pq\7\61\2\2qr\5\n\6\2r\21\3\2\2\2st\7\62\2\2tu\7"+
-		"\22\2\2uv\5\30\r\2vw\7\23\2\2wx\5\n\6\2x\u0081\3\2\2\2yz\7\63\2\2z{\5"+
-		"\n\6\2{|\7\62\2\2|}\7\22\2\2}~\5\30\r\2~\177\7\23\2\2\177\u0081\3\2\2"+
-		"\2\u0080s\3\2\2\2\u0080y\3\2\2\2\u0081\23\3\2\2\2\u0082\u0083\7\64\2\2"+
-		"\u0083\u0084\7\22\2\2\u0084\u0085\5\"\22\2\u0085\u0086\7\65\2\2\u0086"+
-		"\u0087\5\30\r\2\u0087\u0088\7\23\2\2\u0088\u0089\5\n\6\2\u0089\25\3\2"+
-		"\2\2\u008a\u0095\7:\2\2\u008b\u0095\79\2\2\u008c\u008e\7;\2\2\u008d\u008f"+
-		"\5\30\r\2\u008e\u008d\3\2\2\2\u008e\u008f\3\2\2\2\u008f\u0095\3\2\2\2"+
-		"\u0090\u0092\7<\2\2\u0091\u0093\5\30\r\2\u0092\u0091\3\2\2\2\u0092\u0093"+
-		"\3\2\2\2\u0093\u0095\3\2\2\2\u0094\u008a\3\2\2\2\u0094\u008b\3\2\2\2\u0094"+
-		"\u008c\3\2\2\2\u0094\u0090\3\2\2\2\u0095\27\3\2\2\2\u0096\u0097\5\32\16"+
-		"\2\u0097\31\3\2\2\2\u0098\u0099\b\16\1\2\u0099\u009a\t\2\2\2\u009a\u009f"+
-		"\5\32\16\16\u009b\u009c\7\13\2\2\u009c\u009f\5\32\16\4\u009d\u009f\5\36"+
-		"\20\2\u009e\u0098\3\2\2\2\u009e\u009b\3\2\2\2\u009e\u009d\3\2\2\2\u009f"+
-		"\u00d1\3\2\2\2\u00a0\u00a1\f\r\2\2\u00a1\u00a2\7\17\2\2\u00a2\u00d0\5"+
-		"\32\16\16\u00a3\u00a4\f\f\2\2\u00a4\u00a5\t\3\2\2\u00a5\u00d0\5\32\16"+
-		"\r\u00a6\u00a7\f\13\2\2\u00a7\u00a8\t\4\2\2\u00a8\u00d0\5\32\16\f\u00a9"+
-		"\u00aa\f\n\2\2\u00aa\u00ab\t\5\2\2\u00ab\u00d0\5\32\16\13\u00ac\u00ad"+
-		"\f\t\2\2\u00ad\u00ae\t\6\2\2\u00ae\u00d0\5\32\16\n\u00af\u00b0\f\b\2\2"+
-		"\u00b0\u00b1\7\37\2\2\u00b1\u00d0\5\32\16\t\u00b2\u00b3\f\7\2\2\u00b3"+
-		"\u00b4\7 \2\2\u00b4\u00d0\5\32\16\b\u00b5\u00b6\f\6\2\2\u00b6\u00b7\7"+
-		"$\2\2\u00b7\u00b8\5\32\16\2\u00b8\u00b9\7\b\2\2\u00b9\u00ba\5\32\16\7"+
-		"\u00ba\u00d0\3\2\2\2\u00bb\u00bc\f\5\2\2\u00bc\u00bd\t\7\2\2\u00bd\u00d0"+
-		"\5\32\16\6\u00be\u00cb\f\20\2\2\u00bf\u00c0\7\n\2\2\u00c0\u00cc\5\32\16"+
-		"\2\u00c1\u00c3\7\24\2\2\u00c2\u00c4\5\34\17\2\u00c3\u00c2\3\2\2\2\u00c3"+
-		"\u00c4\3\2\2\2\u00c4\u00c5\3\2\2\2\u00c5\u00cc\7\25\2\2\u00c6\u00c8\7"+
-		"\22\2\2\u00c7\u00c9\5\34\17\2\u00c8\u00c7\3\2\2\2\u00c8\u00c9\3\2\2\2"+
-		"\u00c9\u00ca\3\2\2\2\u00ca\u00cc\7\23\2\2\u00cb\u00bf\3\2\2\2\u00cb\u00c1"+
-		"\3\2\2\2\u00cb\u00c6\3\2\2\2\u00cc\u00d0\3\2\2\2\u00cd\u00ce\f\17\2\2"+
-		"\u00ce\u00d0\t\b\2\2\u00cf\u00a0\3\2\2\2\u00cf\u00a3\3\2\2\2\u00cf\u00a6"+
-		"\3\2\2\2\u00cf\u00a9\3\2\2\2\u00cf\u00ac\3\2\2\2\u00cf\u00af\3\2\2\2\u00cf"+
-		"\u00b2\3\2\2\2\u00cf\u00b5\3\2\2\2\u00cf\u00bb\3\2\2\2\u00cf\u00be\3\2"+
-		"\2\2\u00cf\u00cd\3\2\2\2\u00d0\u00d3\3\2\2\2\u00d1\u00cf\3\2\2\2\u00d1"+
-		"\u00d2\3\2\2\2\u00d2\33\3\2\2\2\u00d3\u00d1\3\2\2\2\u00d4\u00d9\5\30\r"+
-		"\2\u00d5\u00d6\7\t\2\2\u00d6\u00d8\5\30\r\2\u00d7\u00d5\3\2\2\2\u00d8"+
-		"\u00db\3\2\2\2\u00d9\u00d7\3\2\2\2\u00d9\u00da\3\2\2\2\u00da\35\3\2\2"+
-		"\2\u00db\u00d9\3\2\2\2\u00dc\u00dd\7\22\2\2\u00dd\u00de\5\30\r\2\u00de"+
-		"\u00df\7\23\2\2\u00df\u00e3\3\2\2\2\u00e0\u00e3\5 \21\2\u00e1\u00e3\5"+
-		"\"\22\2\u00e2\u00dc\3\2\2\2\u00e2\u00e0\3\2\2\2\u00e2\u00e1\3\2\2\2\u00e3"+
-		"\37\3\2\2\2\u00e4\u00e5\t\t\2\2\u00e5!\3\2\2\2\u00e6\u00e7\7F\2\2\u00e7"+
-		"#\3\2\2\2\25%*\66@GXm\u0080\u008e\u0092\u0094\u009e\u00c3\u00c8\u00cb"+
-		"\u00cf\u00d1\u00d9\u00e2";
+		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31\t\31"+
+		"\3\2\5\2\64\n\2\3\2\7\2\67\n\2\f\2\16\2:\13\2\3\2\3\2\3\3\3\3\3\3\3\4"+
+		"\3\4\3\4\3\4\5\4E\n\4\3\4\3\4\3\4\3\5\3\5\3\5\7\5M\n\5\f\5\16\5P\13\5"+
+		"\3\6\3\6\7\6T\n\6\f\6\16\6W\13\6\3\6\3\6\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3"+
+		"\7\3\7\3\7\3\7\3\7\5\7g\n\7\3\b\3\b\3\b\3\b\3\b\3\t\3\t\3\t\3\t\3\t\3"+
+		"\t\3\t\3\t\3\t\3\t\3\t\3\t\7\tz\n\t\f\t\16\t}\13\t\3\t\3\t\3\t\3\n\3\n"+
+		"\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\5\n\u008f\n\n\3\13\3\13\3"+
+		"\13\3\13\3\13\3\13\3\13\3\13\3\f\3\f\3\f\3\f\5\f\u009d\n\f\3\f\3\f\5\f"+
+		"\u00a1\n\f\5\f\u00a3\n\f\3\r\3\r\3\r\3\r\3\r\3\r\3\r\5\r\u00ac\n\r\3\16"+
+		"\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\5\16\u00b8\n\16\3\16\3\16"+
+		"\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16"+
+		"\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\7\16"+
+		"\u00d7\n\16\f\16\16\16\u00da\13\16\3\17\3\17\3\20\3\20\3\20\3\20\3\20"+
+		"\3\20\7\20\u00e4\n\20\f\20\16\20\u00e7\13\20\3\21\3\21\3\21\3\21\3\22"+
+		"\3\22\3\22\5\22\u00f0\n\22\3\22\3\22\3\23\3\23\3\23\5\23\u00f7\n\23\3"+
+		"\23\3\23\3\24\3\24\3\24\3\24\3\24\3\25\3\25\3\25\3\25\3\26\3\26\3\26\7"+
+		"\26\u0107\n\26\f\26\16\26\u010a\13\26\3\27\3\27\3\27\3\27\3\27\3\27\5"+
+		"\27\u0112\n\27\3\30\3\30\3\31\3\31\3\31\2\4\32\36\32\2\4\6\b\n\f\16\20"+
+		"\22\24\26\30\32\34\36 \"$&(*,.\60\2\n\6\2\f\r!!##,-\4\2\16\16\20\21\3"+
+		"\2\f\r\5\2\30\31\35\36\658\3\2\33\34\3\2,-\4\2\32\32&+\3\2?E\2\u0128\2"+
+		"\63\3\2\2\2\4=\3\2\2\2\6@\3\2\2\2\bI\3\2\2\2\nQ\3\2\2\2\ff\3\2\2\2\16"+
+		"h\3\2\2\2\20m\3\2\2\2\22\u008e\3\2\2\2\24\u0090\3\2\2\2\26\u00a2\3\2\2"+
+		"\2\30\u00ab\3\2\2\2\32\u00b7\3\2\2\2\34\u00db\3\2\2\2\36\u00dd\3\2\2\2"+
+		" \u00e8\3\2\2\2\"\u00ec\3\2\2\2$\u00f3\3\2\2\2&\u00fa\3\2\2\2(\u00ff\3"+
+		"\2\2\2*\u0103\3\2\2\2,\u0111\3\2\2\2.\u0113\3\2\2\2\60\u0115\3\2\2\2\62"+
+		"\64\5\4\3\2\63\62\3\2\2\2\63\64\3\2\2\2\648\3\2\2\2\65\67\5\6\4\2\66\65"+
+		"\3\2\2\2\67:\3\2\2\28\66\3\2\2\289\3\2\2\29;\3\2\2\2:8\3\2\2\2;<\7\2\2"+
+		"\3<\3\3\2\2\2=>\7\"\2\2>?\5\60\31\2?\5\3\2\2\2@A\7.\2\2AB\5\60\31\2BD"+
+		"\7\22\2\2CE\5\b\5\2DC\3\2\2\2DE\3\2\2\2EF\3\2\2\2FG\7\23\2\2GH\5\n\6\2"+
+		"H\7\3\2\2\2IN\5\60\31\2JK\7\t\2\2KM\5\60\31\2LJ\3\2\2\2MP\3\2\2\2NL\3"+
+		"\2\2\2NO\3\2\2\2O\t\3\2\2\2PN\3\2\2\2QU\7\26\2\2RT\5\f\7\2SR\3\2\2\2T"+
+		"W\3\2\2\2US\3\2\2\2UV\3\2\2\2VX\3\2\2\2WU\3\2\2\2XY\7\27\2\2Y\13\3\2\2"+
+		"\2Z[\5\16\b\2[\\\7\7\2\2\\g\3\2\2\2]g\5\20\t\2^g\5\22\n\2_g\5\24\13\2"+
+		"`a\5\26\f\2ab\7\7\2\2bg\3\2\2\2cd\5\30\r\2de\7\7\2\2eg\3\2\2\2fZ\3\2\2"+
+		"\2f]\3\2\2\2f^\3\2\2\2f_\3\2\2\2f`\3\2\2\2fc\3\2\2\2g\r\3\2\2\2hi\7/\2"+
+		"\2ij\5\60\31\2jk\7\32\2\2kl\5\30\r\2l\17\3\2\2\2mn\7\60\2\2no\7\22\2\2"+
+		"op\5\30\r\2pq\7\23\2\2q{\5\n\6\2rs\7\61\2\2st\7\60\2\2tu\7\22\2\2uv\5"+
+		"\30\r\2vw\7\23\2\2wx\5\n\6\2xz\3\2\2\2yr\3\2\2\2z}\3\2\2\2{y\3\2\2\2{"+
+		"|\3\2\2\2|~\3\2\2\2}{\3\2\2\2~\177\7\61\2\2\177\u0080\5\n\6\2\u0080\21"+
+		"\3\2\2\2\u0081\u0082\7\62\2\2\u0082\u0083\7\22\2\2\u0083\u0084\5\30\r"+
+		"\2\u0084\u0085\7\23\2\2\u0085\u0086\5\n\6\2\u0086\u008f\3\2\2\2\u0087"+
+		"\u0088\7\63\2\2\u0088\u0089\5\n\6\2\u0089\u008a\7\62\2\2\u008a\u008b\7"+
+		"\22\2\2\u008b\u008c\5\30\r\2\u008c\u008d\7\23\2\2\u008d\u008f\3\2\2\2"+
+		"\u008e\u0081\3\2\2\2\u008e\u0087\3\2\2\2\u008f\23\3\2\2\2\u0090\u0091"+
+		"\7\64\2\2\u0091\u0092\7\22\2\2\u0092\u0093\5\60\31\2\u0093\u0094\7\65"+
+		"\2\2\u0094\u0095\5\30\r\2\u0095\u0096\7\23\2\2\u0096\u0097\5\n\6\2\u0097"+
+		"\25\3\2\2\2\u0098\u00a3\7:\2\2\u0099\u00a3\79\2\2\u009a\u009c\7;\2\2\u009b"+
+		"\u009d\5\30\r\2\u009c\u009b\3\2\2\2\u009c\u009d\3\2\2\2\u009d\u00a3\3"+
+		"\2\2\2\u009e\u00a0\7<\2\2\u009f\u00a1\5\30\r\2\u00a0\u009f\3\2\2\2\u00a0"+
+		"\u00a1\3\2\2\2\u00a1\u00a3\3\2\2\2\u00a2\u0098\3\2\2\2\u00a2\u0099\3\2"+
+		"\2\2\u00a2\u009a\3\2\2\2\u00a2\u009e\3\2\2\2\u00a3\27\3\2\2\2\u00a4\u00ac"+
+		"\5\32\16\2\u00a5\u00ac\5\36\20\2\u00a6\u00ac\5 \21\2\u00a7\u00ac\5\"\22"+
+		"\2\u00a8\u00ac\5$\23\2\u00a9\u00ac\5&\24\2\u00aa\u00ac\5(\25\2\u00ab\u00a4"+
+		"\3\2\2\2\u00ab\u00a5\3\2\2\2\u00ab\u00a6\3\2\2\2\u00ab\u00a7\3\2\2\2\u00ab"+
+		"\u00a8\3\2\2\2\u00ab\u00a9\3\2\2\2\u00ab\u00aa\3\2\2\2\u00ac\31\3\2\2"+
+		"\2\u00ad\u00ae\b\16\1\2\u00ae\u00af\t\2\2\2\u00af\u00b8\5\32\16\16\u00b0"+
+		"\u00b1\5\60\31\2\u00b1\u00b2\5\34\17\2\u00b2\u00b3\5\32\16\5\u00b3\u00b8"+
+		"\3\2\2\2\u00b4\u00b5\7\13\2\2\u00b5\u00b8\5\32\16\4\u00b6\u00b8\5,\27"+
+		"\2\u00b7\u00ad\3\2\2\2\u00b7\u00b0\3\2\2\2\u00b7\u00b4\3\2\2\2\u00b7\u00b6"+
+		"\3\2\2\2\u00b8\u00d8\3\2\2\2\u00b9\u00ba\f\r\2\2\u00ba\u00bb\7\17\2\2"+
+		"\u00bb\u00d7\5\32\16\16\u00bc\u00bd\f\f\2\2\u00bd\u00be\t\3\2\2\u00be"+
+		"\u00d7\5\32\16\r\u00bf\u00c0\f\13\2\2\u00c0\u00c1\t\4\2\2\u00c1\u00d7"+
+		"\5\32\16\f\u00c2\u00c3\f\n\2\2\u00c3\u00c4\t\5\2\2\u00c4\u00d7\5\32\16"+
+		"\13\u00c5\u00c6\f\t\2\2\u00c6\u00c7\t\6\2\2\u00c7\u00d7\5\32\16\n\u00c8"+
+		"\u00c9\f\b\2\2\u00c9\u00ca\7\37\2\2\u00ca\u00d7\5\32\16\t\u00cb\u00cc"+
+		"\f\7\2\2\u00cc\u00cd\7 \2\2\u00cd\u00d7\5\32\16\b\u00ce\u00cf\f\6\2\2"+
+		"\u00cf\u00d0\7$\2\2\u00d0\u00d1\5\32\16\2\u00d1\u00d2\7\b\2\2\u00d2\u00d3"+
+		"\5\32\16\6\u00d3\u00d7\3\2\2\2\u00d4\u00d5\f\17\2\2\u00d5\u00d7\t\7\2"+
+		"\2\u00d6\u00b9\3\2\2\2\u00d6\u00bc\3\2\2\2\u00d6\u00bf\3\2\2\2\u00d6\u00c2"+
+		"\3\2\2\2\u00d6\u00c5\3\2\2\2\u00d6\u00c8\3\2\2\2\u00d6\u00cb\3\2\2\2\u00d6"+
+		"\u00ce\3\2\2\2\u00d6\u00d4\3\2\2\2\u00d7\u00da\3\2\2\2\u00d8\u00d6\3\2"+
+		"\2\2\u00d8\u00d9\3\2\2\2\u00d9\33\3\2\2\2\u00da\u00d8\3\2\2\2\u00db\u00dc"+
+		"\t\b\2\2\u00dc\35\3\2\2\2\u00dd\u00de\b\20\1\2\u00de\u00df\5,\27\2\u00df"+
+		"\u00e5\3\2\2\2\u00e0\u00e1\f\4\2\2\u00e1\u00e2\7\n\2\2\u00e2\u00e4\5\60"+
+		"\31\2\u00e3\u00e0\3\2\2\2\u00e4\u00e7\3\2\2\2\u00e5\u00e3\3\2\2\2\u00e5"+
+		"\u00e6\3\2\2\2\u00e6\37\3\2\2\2\u00e7\u00e5\3\2\2\2\u00e8\u00e9\5\36\20"+
+		"\2\u00e9\u00ea\5\34\17\2\u00ea\u00eb\5\30\r\2\u00eb!\3\2\2\2\u00ec\u00ed"+
+		"\5\60\31\2\u00ed\u00ef\7\22\2\2\u00ee\u00f0\5*\26\2\u00ef\u00ee\3\2\2"+
+		"\2\u00ef\u00f0\3\2\2\2\u00f0\u00f1\3\2\2\2\u00f1\u00f2\7\23\2\2\u00f2"+
+		"#\3\2\2\2\u00f3\u00f4\5\36\20\2\u00f4\u00f6\7\22\2\2\u00f5\u00f7\5*\26"+
+		"\2\u00f6\u00f5\3\2\2\2\u00f6\u00f7\3\2\2\2\u00f7\u00f8\3\2\2\2\u00f8\u00f9"+
+		"\7\23\2\2\u00f9%\3\2\2\2\u00fa\u00fb\5\36\20\2\u00fb\u00fc\7\24\2\2\u00fc"+
+		"\u00fd\5*\26\2\u00fd\u00fe\7\25\2\2\u00fe\'\3\2\2\2\u00ff\u0100\5&\24"+
+		"\2\u0100\u0101\5\34\17\2\u0101\u0102\5\30\r\2\u0102)\3\2\2\2\u0103\u0108"+
+		"\5\30\r\2\u0104\u0105\7\t\2\2\u0105\u0107\5\30\r\2\u0106\u0104\3\2\2\2"+
+		"\u0107\u010a\3\2\2\2\u0108\u0106\3\2\2\2\u0108\u0109\3\2\2\2\u0109+\3"+
+		"\2\2\2\u010a\u0108\3\2\2\2\u010b\u010c\7\22\2\2\u010c\u010d\5\30\r\2\u010d"+
+		"\u010e\7\23\2\2\u010e\u0112\3\2\2\2\u010f\u0112\5.\30\2\u0110\u0112\5"+
+		"\60\31\2\u0111\u010b\3\2\2\2\u0111\u010f\3\2\2\2\u0111\u0110\3\2\2\2\u0112"+
+		"-\3\2\2\2\u0113\u0114\t\t\2\2\u0114/\3\2\2\2\u0115\u0116\7F\2\2\u0116"+
+		"\61\3\2\2\2\26\638DNUf{\u008e\u009c\u00a0\u00a2\u00ab\u00b7\u00d6\u00d8"+
+		"\u00e5\u00ef\u00f6\u0108\u0111";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

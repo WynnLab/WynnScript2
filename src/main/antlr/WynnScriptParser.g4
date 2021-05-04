@@ -54,12 +54,17 @@ control_statement
     ;
 
 expression
-    : operator_expression
+    : operator_expression #operator
+    | field_get #getField
+    | field_set #setField
+    | function_call #invoke
+    | method_call #method
+    | index_get #getIndex
+    | index_set #setIndex
     ;
 
 operator_expression
-    : operator_expression (DOT operator_expression | LSQUARE args? RSQUARE | LPAREN args? RPAREN) #access
-    | operator_expression (INC | DEC) #postfix
+    : operator_expression (INC | DEC) #postfix
     | (BANG | TILDE | PLUS | DASH | INC | DEC) operator_expression #prefix
     | operator_expression POW operator_expression #power
     | operator_expression (STAR | SLASH | PERCENT) operator_expression #product
@@ -68,10 +73,39 @@ operator_expression
     | operator_expression (EQEQ | NEQ) operator_expression #equality
     | operator_expression AND operator_expression #and
     | operator_expression OR operator_expression #or
-    | operator_expression QUEST operator_expression COLON operator_expression #conditional
-    | operator_expression (EQ | PLUS_EQ | MINUS_EQ | TIMES_EQ | DIV_EQ | MOD_EQ | POW_EQ) operator_expression #assign
+    | <assoc=right> operator_expression QUEST operator_expression COLON operator_expression #conditional
+    | id assign_operator operator_expression #assign
     | ELLIPSIS operator_expression #spread
     | primary_expression #primary
+    ;
+
+assign_operator
+    : EQ | PLUS_EQ | MINUS_EQ | TIMES_EQ | DIV_EQ | MOD_EQ | POW_EQ
+    ;
+
+field_get
+    : field_get DOT id
+    | primary_expression
+    ;
+
+field_set
+    : field_get assign_operator expression
+    ;
+
+function_call
+    : id LPAREN args? RPAREN
+    ;
+
+method_call
+    : field_get LPAREN args? RPAREN
+    ;
+
+index_get
+    : field_get LSQUARE args RSQUARE
+    ;
+
+index_set
+    : index_get assign_operator expression
     ;
 
 args

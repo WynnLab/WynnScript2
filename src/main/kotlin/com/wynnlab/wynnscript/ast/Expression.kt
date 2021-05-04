@@ -1,14 +1,26 @@
 package com.wynnlab.wynnscript.ast
 
+import com.wynnlab.wynnscript.Scope
 import com.wynnlab.wynnscript.WynnScriptParseException
 import com.wynnlab.wynnscript.antlr.WynnScriptParser
 import java.lang.NumberFormatException
 
 internal interface Expression : Statement {
     companion object {
-        operator fun invoke(ctx: WynnScriptParser.ExpressionContext) = OperatorExpression(ctx.operator_expression())
+        operator fun invoke(ctx: WynnScriptParser.ExpressionContext) = when (ctx) {
+            is WynnScriptParser.OperatorContext -> OperatorExpression(ctx.operator_expression())
+            is WynnScriptParser.GetFieldContext -> GetField(ctx.field_get())
+            is WynnScriptParser.SetFieldContext -> SetField(ctx.field_set())
+            is WynnScriptParser.InvokeContext -> FunctionCall(ctx.function_call())
+            is WynnScriptParser.MethodContext -> MethodCall(ctx.method_call())
+            is WynnScriptParser.GetIndexContext -> GetIndex(ctx.index_get())
+            is WynnScriptParser.SetIndexContext -> SetIndex(ctx.index_set())
+            else -> throw WynnScriptParseException(ctx)
+        }
     }
 }
+
+fun Any?.isTrue() = this == true || this != false && this.hashCode() != 0
 
 internal interface PrimaryExpression : Expression {
     companion object {
@@ -33,6 +45,10 @@ internal class Literal(ctx: WynnScriptParser.LiteralContext) : PrimaryExpression
 
     private fun getNumber(text: String) = (text.toIntOrNull() ?: text.toLongOrNull() ?: text.toDoubleOrNull() ?:
         throw NumberFormatException(text)) as Number
+
+    override fun invoke(scope: Scope): Any? = value
 }
 
-internal data class Name(val name: String) : PrimaryExpression
+internal data class Name(val name: String) : PrimaryExpression {
+    override fun invoke(scope: Scope): Any? = scope.lookup(name)
+}
