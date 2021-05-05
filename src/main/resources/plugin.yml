@@ -1,0 +1,6 @@
+name: WynnScript2
+version: 1.0
+api-version: 1.16
+author: Siinus
+main: com.wynnlab.wynnscript.plugin.Plugin
+depend: [ KBukkit ]
