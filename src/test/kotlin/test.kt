@@ -7,12 +7,8 @@ fun main() {
     val script = WynnScript("""
         # Test
         
-        function init(msg) {
-            this.msg = msg;
-        }
-        
         function main() {
-            println(this.msg);
+            println(a.i());
         }
     """.trimIndent())
 
@@ -20,8 +16,9 @@ fun main() {
 
     ast["println"] = Invocable { _, args -> if (args.size != 1) throw IllegalArgumentException() else println(args[0]) }
     ast["a"] = A(0)
+    ast["A"] = A::class.java
+    ast["E"] = E::class.java
 
-    ast.invoke("init", "Hi")
     ast.invoke("main")
 /*    for (i in listOf("plus", "minus", "times", "div", "rem")) {
         println("""fun Number.$i(other: Number): Number {
@@ -66,6 +63,19 @@ class A(var a: Int) {
     fun give(a: Int) = a
 
     val list = mutableListOf("X")
+
+    companion object {
+        @JvmStatic
+        val I = "X"
+
+        @JvmStatic
+        fun i() = "x"
+    }
+}
+
+enum class E {
+    A, B, C;
+    val t = "t"
 }
 
 /*@Test

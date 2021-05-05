@@ -43,13 +43,14 @@ fun Any.invokeMethod(name: String, vararg args: Any?): Any? {
 }
 
 fun Any.getField(name: String): Any? {
-    val c = this::class.java
+    val static = this is Class<*>
+    val c = if (static) this as Class<*> else this::class.java
 
     return try {
-        c.getField(name).get(this)
+        c.getField(name).get(if (static) null else this)
     } catch (e: NoSuchFieldException) {
         try {
-            c.getMethod("get${name[0].toUpperCase()}${name.substring(1)}")(this)
+            c.getMethod("get${name[0].toUpperCase()}${name.substring(1)}")(if (static) null else this)
         } catch (_: NoSuchMethodException) {
             throw e
         }
