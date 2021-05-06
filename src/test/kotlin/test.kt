@@ -7,19 +7,32 @@ fun main() {
     val script = WynnScript("""
         # Test
         
-        function main() {
-            println(a.i());
+        function main(a, u, v) {
+            this.s = 9;
+            println(this.s);
+            /*println(a.i());
+            println(a.b);
+            println((a.b).c);
+            println(a.b().c);
+            println(a.b().c());
+            println(a[u]);
+            println(a[u] = 5);
+            println(a.u[v]);
+            println(a[u].i);
+            println(a[u].i());
+            println(a[u][v]);
+            println(a.b = 5);
+            println(a.b += 3);*/
         }
     """.trimIndent())
 
     val ast = script.compile()
 
     ast["println"] = Invocable { _, args -> if (args.size != 1) throw IllegalArgumentException() else println(args[0]) }
-    ast["a"] = A(0)
-    ast["A"] = A::class.java
-    ast["E"] = E::class.java
 
-    ast.invoke("main")
+    println("==========")
+
+    ast.invoke("main", A(), U(), 0)
 /*    for (i in listOf("plus", "minus", "times", "div", "rem")) {
         println("""fun Number.$i(other: Number): Number {
     if (this is Double) return $i(other.toDouble())
@@ -31,6 +44,30 @@ fun main() {
 """)
     }*/
 }
+
+class A {
+    fun i() = "i"
+    var b: Any = B()
+    fun b() = b
+
+    fun get(u: U) = u
+    fun set(u: U, i: Int) = i
+
+    val u = U()
+}
+
+class B {
+    val c = "c"
+    fun c() = c
+}
+
+class U {
+    val i = "I"
+    fun i() = i
+
+    fun get(i: Int) = i
+}
+
 /*    /*val int = "1"
     val float = "1f"
     val double = "1.0"
@@ -56,27 +93,6 @@ fun main() {
 
     println(a.setField("a", 2))
 }*/
-
-class A(var a: Int) {
-    fun give(i: CharSequence) = a
-
-    fun give(a: Int) = a
-
-    val list = mutableListOf("X")
-
-    companion object {
-        @JvmStatic
-        val I = "X"
-
-        @JvmStatic
-        fun i() = "x"
-    }
-}
-
-enum class E {
-    A, B, C;
-    val t = "t"
-}
 
 /*@Test
 fun `test basic mob spell script`() {

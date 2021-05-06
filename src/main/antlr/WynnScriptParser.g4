@@ -65,11 +65,7 @@ expression
 
 operator_expression
     : primary_expression #primary
-    | field_get #getField
-    | function_call #invoke
-    | method_call #method
-    | index_get #getIndex
-    | index_set #setIndex
+    | access #acc
     | operator_expression (INC | DEC) #postfix
     | (BANG | TILDE | PLUS | DASH | INC | DEC) operator_expression #prefix
     | operator_expression POW operator_expression #power
@@ -81,7 +77,7 @@ operator_expression
     | operator_expression OR operator_expression #or
     | <assoc=right> operator_expression QUEST operator_expression COLON operator_expression #conditional
     | id assign_operator operator_expression #assign
-    | field_set #setField
+    | access DOT simple_id assign_operator expression #field_set
     | ELLIPSIS operator_expression #spread
     ;
 
@@ -89,31 +85,18 @@ assign_operator
     : EQ | PLUS_EQ | MINUS_EQ | TIMES_EQ | DIV_EQ | MOD_EQ | POW_EQ
     ;
 
-field_get
-    : field_get DOT simple_id
+access
+    : access DOT operation
+    | operation
     | primary_expression
     | THIS
     ;
 
-field_set
-    : field_get assign_operator expression
-    ;
-
-function_call
-    : id LPAREN args? RPAREN
-    ;
-
-method_call
-    : field_get LPAREN args? RPAREN
-    ;
-
-index_get
-    : field_get LSQUARE args RSQUARE
-    ;
-
-index_set
-    : index_get assign_operator expression
-    ;
+operation
+    : simple_id (
+    | LPAREN args? RPAREN
+    | (LSQUARE args RSQUARE)+ (assign_operator expression)?
+    );
 
 args
     : expression (COMMA expression)*

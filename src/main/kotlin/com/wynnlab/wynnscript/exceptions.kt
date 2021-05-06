@@ -2,7 +2,7 @@ package com.wynnlab.wynnscript
 
 import org.antlr.v4.runtime.ParserRuleContext
 
-class WynnScriptParseException(ctx: ParserRuleContext) : Exception("Exception at parsing ${ctx::class.simpleName}")
+class WynnScriptParseException(ctx: ParserRuleContext) : Exception("Exception at parsing ${ctx::class.simpleName}: ${ctx.text}")
 
 class NoSuchFunctionException(name: String, args: Int) : Exception("No such function: $name with $args args")
 

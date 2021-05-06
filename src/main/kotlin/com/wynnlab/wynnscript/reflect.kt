@@ -4,7 +4,8 @@ import com.wynnlab.wynnscript.ast.isTrue
 import java.lang.reflect.Method
 
 fun Any.getMethod(name: String, vararg parameters: Class<*>?): Method {
-    val c = this::class.java
+    val static = this is Class<*>
+    val c = if (static) this as Class<*> else this::class.java
 
     val pc = parameters.size
 
@@ -38,12 +39,13 @@ fun Any.invokeMethod(name: String, vararg args: Any?): Any? {
     return when (this) {
         is Int, is Long, is Double, is Boolean -> binaryNumberMethods[name]?.also { return it(this as Number, args[0] as Number) } ?:
             unaryNumberMethods[name]?.also { return it(this as Number) } ?: unaryBooleanMethods[name]?.also { return it(this.isTrue()) }
-        else -> getMethod(name, *Array(args.size) { i -> args[i]?.javaClass }).invoke(this, *args)
+        else -> getMethod(name, *Array(args.size) { i -> args[i]?.javaClass }).invoke(if (this is Class<*>) null else this, *args)
     }
 }
 
 fun Any.getField(name: String): Any? {
     val static = this is Class<*>
+    //println("$this $static $name")
     val c = if (static) this as Class<*> else this::class.java
 
     return try {

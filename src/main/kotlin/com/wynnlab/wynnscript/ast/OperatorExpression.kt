@@ -10,12 +10,7 @@ import kotlin.math.pow
 internal interface OperatorExpression : Expression {
     companion object {
         operator fun invoke(ctx: WynnScriptParser.Operator_expressionContext): Expression = when(ctx) {
-            is WynnScriptParser.GetFieldContext -> GetField(ctx.field_get())
-            is WynnScriptParser.SetFieldContext -> SetField(ctx.field_set())
-            is WynnScriptParser.InvokeContext -> FunctionCall(ctx.function_call())
-            is WynnScriptParser.MethodContext -> MethodCall(ctx.method_call())
-            is WynnScriptParser.GetIndexContext -> GetIndex(ctx.index_get())
-            is WynnScriptParser.SetIndexContext -> SetIndex(ctx.index_set())
+            is WynnScriptParser.AccContext -> Access(ctx.access())
             is WynnScriptParser.PostfixContext -> Postfix(ctx)
             is WynnScriptParser.PrefixContext -> Prefix(ctx)
             is WynnScriptParser.PowerContext -> Power(ctx)
@@ -27,6 +22,7 @@ internal interface OperatorExpression : Expression {
             is WynnScriptParser.OrContext -> Or(ctx)
             is WynnScriptParser.ConditionalContext -> Conditional(ctx)
             is WynnScriptParser.AssignContext -> Assign(ctx)
+            is WynnScriptParser.Field_setContext -> SetField(ctx)
             is WynnScriptParser.SpreadContext -> Spread(ctx)
             is WynnScriptParser.PrimaryContext -> PrimaryExpression(ctx.primary_expression())
             else -> throw WynnScriptParseException(ctx)
