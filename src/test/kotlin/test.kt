@@ -8,27 +8,14 @@ fun main() {
         # Test
         
         function main(a, u, v) {
-            this.s = 9;
-            println(this.s);
-            /*println(a.i());
-            println(a.b);
-            println((a.b).c);
-            println(a.b().c);
-            println(a.b().c());
-            println(a[u]);
-            println(a[u] = 5);
-            println(a.u[v]);
-            println(a[u].i);
-            println(a[u].i());
-            println(a[u][v]);
-            println(a.b = 5);
-            println(a.b += 3);*/
+            out.println("Hi");
         }
     """.trimIndent())
 
     val ast = script.compile()
 
     ast["println"] = Invocable { _, args -> if (args.size != 1) throw IllegalArgumentException() else println(args[0]) }
+    ast["out"] = System.out
 
     println("==========")
 
@@ -65,7 +52,7 @@ class U {
     val i = "I"
     fun i() = i
 
-    fun get(i: Int) = i
+    fun get(i: Double) = i
 }
 
 /*    /*val int = "1"

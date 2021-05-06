@@ -9,6 +9,9 @@ fun Any.getMethod(name: String, vararg parameters: Class<*>?): Method {
 
     val pc = parameters.size
 
+    var given = 0
+    var matched = 0
+
     var res: Method? = null
 
     ml@ for (m in c.methods) {
@@ -16,18 +19,30 @@ fun Any.getMethod(name: String, vararg parameters: Class<*>?): Method {
 
         if (m.parameterCount != pc) continue@ml
 
+        var g = 0 // given
+        var md = 0 // matched
+
         var i = -1
         pl@ for (p in m.parameters) {
             ++i
 
             val ep = parameters[i] ?: continue@pl
+            ++g
 
-            if (!p.type.isAssignableFrom(ep) && primitiveToWrapper(p.type) != ep) continue@ml
+            val t = primitiveToWrapper(p.type)
+
+            if (t == ep)
+                ++md
+            else if (!p.type.isAssignableFrom(ep) && !Number::class.java.isAssignableFrom(t))
+                continue@ml
         }
 
         if (res != null) {
-            throw AmbiguousMethodRequested("${c.canonicalName}.$name(${parameters.map { it?.canonicalName }.joinToString()})")
+            if (g <= given && md <= matched)
+                continue@ml //throw AmbiguousMethodRequested("${c.canonicalName}.$name(${parameters.map { it?.canonicalName }.joinToString()})")
         }
+
+        given = g; matched = md
 
         res = m
     }
@@ -39,7 +54,9 @@ fun Any.invokeMethod(name: String, vararg args: Any?): Any? {
     return when (this) {
         is Int, is Long, is Double, is Boolean -> binaryNumberMethods[name]?.also { return it(this as Number, args[0] as Number) } ?:
             unaryNumberMethods[name]?.also { return it(this as Number) } ?: unaryBooleanMethods[name]?.also { return it(this.isTrue()) }
-        else -> getMethod(name, *Array(args.size) { i -> args[i]?.javaClass }).invoke(if (this is Class<*>) null else this, *args)
+        else ->
+            getMethod(name, *Array(args.size) { i -> args[i]?.javaClass })
+                .invoke(if (this is Class<*>) null else this, *args)
     }
 }
 

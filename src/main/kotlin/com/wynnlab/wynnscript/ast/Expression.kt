@@ -38,7 +38,7 @@ internal class Literal(ctx: WynnScriptParser.LiteralContext) : PrimaryExpression
 
     private fun getString(text: String) = text.substring(1, text.length - 1)
 
-    private fun getNumber(text: String) = (text.toIntOrNull() ?: text.toLongOrNull() ?: text.toDoubleOrNull() ?:
+    private fun getNumber(text: String) = (text.toIntOrNull() ?: text.toLongOrNull() ?: text.toFloatOrNull()?: text.toDoubleOrNull() ?:
         throw NumberFormatException(text)) as Number
 
     override fun invoke(scope: Scope): Any? = value
